@@ -15,6 +15,9 @@ module.exports = {
     browser: true
   },
   rules: {
+    semi: 'error',
+    quotes: ['error', 'single'],
+    'object-curly-spacing': ['error', 'always']
   },
   overrides: [
     // node files

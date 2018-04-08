@@ -33,7 +33,7 @@ module('Integration | Component | conveyance-task', function(hooks) {
       }}
     `);
 
-    assert.dom('[data-test-status]').containsText('Status: outstanding', `The task's status should be displayed`);
+    assert.dom('[data-test-status]').containsText('Status: outstanding', 'The task\'s status should be displayed');
   });
 
   test('it renders the task\'s description', async function(assert) {
@@ -46,6 +46,6 @@ module('Integration | Component | conveyance-task', function(hooks) {
       }}
     `);
 
-    assert.dom('[data-test-description]').containsText('A default description', `The task's description should be displayed`);
+    assert.dom('[data-test-description]').containsText('A default description', 'The task\'s description should be displayed');
   });
 });
