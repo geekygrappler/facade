@@ -22,4 +22,10 @@ module('Integration | Component | formatted-address', function(hooks) {
       'The address is correctly formatted over multiple lines'
     );
   });
+
+  test('it does not render if there is no address', async function(assert) {
+    await render(hbs`{{formatted-address}}`);
+
+    assert.dom('[data-test-formatted-address]').containsText('', 'The component renders nothing without an address');
+  });
 });
