@@ -1,5 +1,6 @@
-import { Factory, belongsTo } from 'ember-cli-mirage';
+import { Factory, belongsTo, hasMany } from 'ember-cli-mirage';
 
 export default Factory.extend({
-  address: belongsTo()
+  address: belongsTo(),
+  tasks: hasMany()
 });

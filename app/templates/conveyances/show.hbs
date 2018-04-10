@@ -3,4 +3,7 @@
 <h3>Address</h3>
 {{formatted-address address=conveyance.address}}
 
-{{conveyance}}
+<h2>Tasks</h2>
+{{#each conveyance.tasks as |task|}}
+  {{conveyance-task task=task}}
+{{/each}}
