@@ -7,9 +7,11 @@ const Router = EmberRouter.extend({
 });
 
 Router.map(function() {
+  this.route('dashboard');
   this.route('conveyances', function() {
     this.route('show', { path: ':id' });
   });
+  this.route('login');
 });
 
 export default Router;

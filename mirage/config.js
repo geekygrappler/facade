@@ -1,3 +1,5 @@
+import { Response } from 'ember-cli-mirage';
+
 export default function() {
 
   // These comments are here to help you get started. Feel free to delete them.
@@ -25,4 +27,10 @@ export default function() {
   */
 
   this.get('/conveyances/:id');
+
+  this.post('/token', () => {
+    return new Response(200, {}, {
+      access_token: 'hello'
+    });
+  });
 }

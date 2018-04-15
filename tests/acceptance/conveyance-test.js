@@ -8,6 +8,8 @@ module('Acceptance | conveyance', function(hooks) {
   setupFactoryGuy(hooks);
 
   test('visiting /conveyances/:id renders information', async function(assert) {
+    this.owner.lookup('service:session').set('isAuthenticated', true);
+
     mockFindRecord('conveyance', 'withAddress', 'withTasks');
 
     await visit('/conveyances/1');
