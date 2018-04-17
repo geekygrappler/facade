@@ -30,7 +30,7 @@ export default function() {
 
   this.post('/token', () => {
     return new Response(200, {}, {
-      access_token: 'hello'
+      access_token: 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiIxMiJ9.H2aRRkffDBrCUba2RwVDhNSuDfYCvZrKaK128ht9h9w'
     });
   });
 }
