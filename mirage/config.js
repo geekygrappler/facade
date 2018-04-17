@@ -30,7 +30,13 @@ export default function() {
 
   this.post('/token', () => {
     return new Response(200, {}, {
-      access_token: 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiIxMiJ9.H2aRRkffDBrCUba2RwVDhNSuDfYCvZrKaK128ht9h9w'
+      access_token: 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiIxIn0.3IVGWbNupXA5kLyvBHoq7EBzkaKdQRsflg5oc_OXGxQ'
+    });
+  });
+
+  this.get('/conveyances', ({ conveyances }, request) => {
+    return conveyances.all().filter((conveyance) => {
+      return conveyance.buyer.id === request.queryParams['filter[userId]'];
     });
   });
 }

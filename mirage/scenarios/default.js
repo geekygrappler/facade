@@ -8,6 +8,7 @@ export default function(server) {
   // server.createList('post', 10);
   server.create('conveyance', {
     address: server.create('address'),
-    tasks: server.createList('task', 3)
+    tasks: server.createList('task', 3),
+    buyer: server.create('user')
   });
 }
