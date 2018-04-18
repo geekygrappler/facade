@@ -1,4 +1,6 @@
 import DS from 'ember-data';
+import { filterBy, length } from 'ember-awesome-macros/array';
+import raw from 'ember-macro-helpers/raw';
 
 /**
  * Represents a conveyancing case
@@ -27,5 +29,10 @@ export default DS.Model.extend({
    * Not sure at this stage if we'll need the current address of the buyer as well as
    * ther property address
    */
-  address: DS.belongsTo('address')
+  address: DS.belongsTo('address'),
+
+  /**
+   * Number of complete tasks
+   */
+  numberOfCompleteTasks: length(filterBy('tasks', raw('complete'), true))
 });
