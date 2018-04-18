@@ -1,0 +1,13 @@
+<p>Property</p>
+{{#if conveyance.address}}
+  <div data-test-property-address>
+    {{formatted-address address=conveyance.address}}
+  </div>
+{{else}}
+  <span>Property address not yet added</span>
+{{/if}}
+
+<p>Status</p>
+<span data-test-status>{{conveyance.numberOfCompleteTasks}}/{{conveyance.tasks.length}} tasks complete</span>
+
+{{yield}}
