@@ -1,14 +1,18 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import { run } from '@ember/runloop';
+import { setupFactoryGuy, make } from 'ember-data-factory-guy';
 
 module('Unit | Model | user', function(hooks) {
   setupTest(hooks);
+  setupFactoryGuy(hooks);
 
-  // Replace this with your real tests.
-  test('it exists', function(assert) {
-    let store = this.owner.lookup('service:store');
-    let model = run(() => store.createRecord('user', {}));
-    assert.ok(model);
+  test('A solicitor user', function(assert) {
+    let model = make('solicitor');
+    assert.ok(model.isSolicitor, 'A solicitor user can be identified');
+  });
+
+  test('A buyer user', function(assert) {
+    let model = make('buyer');
+    assert.ok(model.isBuyer, 'A buyer user can be identified');
   });
 });
