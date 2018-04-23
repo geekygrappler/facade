@@ -28,6 +28,8 @@ export default function() {
 
   this.get('/conveyances/:id');
 
+  this.get('/users/:id');
+
   this.post('/token', () => {
     return new Response(200, {}, {
       access_token: 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiIxIn0.3IVGWbNupXA5kLyvBHoq7EBzkaKdQRsflg5oc_OXGxQ'

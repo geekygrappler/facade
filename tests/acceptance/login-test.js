@@ -1,7 +1,9 @@
 import { module, test } from 'qunit';
 import { visit, currentURL, click } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
-import { setupFactoryGuy, mock, mockQuery, buildList } from 'ember-data-factory-guy';
+import { setupFactoryGuy, mock, mockQuery, buildList, build, mockFindRecord } from 'ember-data-factory-guy';
+
+const JWT = 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiIxIn0.3IVGWbNupXA5kLyvBHoq7EBzkaKdQRsflg5oc_OXGxQ'; // jwt with user id 1
 
 module('Acceptance | log in', function(hooks) {
   setupApplicationTest(hooks);
@@ -26,7 +28,7 @@ module('Acceptance | log in', function(hooks) {
       mock({
         type: 'POST',
         url: '/token',
-        responseText: { access_token: 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiIxIn0.3IVGWbNupXA5kLyvBHoq7EBzkaKdQRsflg5oc_OXGxQ' }
+        responseText: { access_token: JWT }
       });
 
       mockQuery('conveyance').returns({ json: buildList('conveyance', 3) });
@@ -39,13 +41,37 @@ module('Acceptance | log in', function(hooks) {
     });
 
     test('authenticated users should be redirected to their dashboard if they try to access \'/login\'', async function(assert) {
-      this.owner.lookup('service:session').set('isAuthenticated', true);
+      let session = this.owner.lookup('service:session');
+      session.set('isAuthenticated', true);
+      session.set('data', {
+        authenticated: { access_token: JWT }
+      });
+
+      let user = build('user');
+      mockFindRecord('user').returns({ json: user });
 
       mockQuery('conveyance').returns({ json: buildList('conveyance', 3) });
 
       await visit('/login');
 
       assert.equal(currentURL(), '/dashboard', 'The user is redirected to dashboard when already logged in');
+    });
+
+    test('when the application loads the user will be available if the session is authenticated', async function(assert) {
+      let session = this.owner.lookup('service:session');
+      session.set('isAuthenticated', true);
+      session.set('data', {
+        authenticated: { access_token: JWT }
+      });
+
+      let user = build('user');
+      mockFindRecord('user').returns({ json: user });
+
+      await visit('/');
+
+      let store = this.owner.lookup('service:store');
+
+      assert.equal(store.peekRecord('user', user.get('id')).get('id'), user.get('id'), 'The user is loaded when the session is authenticated');
     });
   });
 });
