@@ -13,5 +13,12 @@ export default Service.extend({
       return jwtDecode(token).userId;
     }
     return null;
+  }),
+
+  user: computed('session.isAuthenticated', function() {
+    if (this.get('session.isAuthenticated')) {
+      return this.get('store').findRecord('user', this.get('id'));
+    }
+    return null;
   })
 });
