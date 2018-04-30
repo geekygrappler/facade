@@ -2,8 +2,7 @@ import { module, test } from 'qunit';
 import { visit, currentURL, click } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupFactoryGuy, mock, mockQuery, buildList, build, mockFindRecord } from 'ember-data-factory-guy';
-
-const JWT = 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiIxIn0.3IVGWbNupXA5kLyvBHoq7EBzkaKdQRsflg5oc_OXGxQ'; // jwt with user id 1
+import { JWT } from '../helpers/users';
 
 module('Acceptance | log in', function(hooks) {
   setupApplicationTest(hooks);
