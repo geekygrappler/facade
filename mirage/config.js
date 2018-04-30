@@ -30,15 +30,37 @@ export default function() {
 
   this.get('/users/:id');
 
-  this.post('/token', () => {
-    return new Response(200, {}, {
-      access_token: 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiIxIn0.3IVGWbNupXA5kLyvBHoq7EBzkaKdQRsflg5oc_OXGxQ'
+  this.post('/token', (schema, request) => {
+    if (request.requestBody.includes('solicitor')) {
+      // user 1 is a solicitor
+      return new Response(200, {}, {
+        access_token: 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiIxIn0.3IVGWbNupXA5kLyvBHoq7EBzkaKdQRsflg5oc_OXGxQ'
+      });
+    }
+    if (request.requestBody.includes('buyer')) {
+      // user 2 is a buyer
+      return new Response(200, {}, {
+        access_token: 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiIyIn0.Hfisvn6GzGJeWNS_Z72SDV-jPjL18MX18cO0EA4nlcQ'
+      });
+    }
+    return new Response(400, {}, {
+      'error': 'Wrong email or password try solicitor or buyer'
     });
   });
 
-  this.get('/conveyances', ({ conveyances }, request) => {
-    return conveyances.all().filter((conveyance) => {
-      return conveyance.buyer.id === request.queryParams['filter[userId]'];
-    });
+  this.get('/conveyances', ({ conveyances, users }, request) => {
+    let userId = request.queryParams['filter[userId]'];
+    let user = users.all().models.find(user => user.id === userId);
+    if (user.role === 'solicitor') {
+      return conveyances.all().filter((conveyance) => {
+        return  conveyance.solicitor.id === userId;
+      });
+    }
+    if (user.role === 'buyer') {
+      return conveyances.all().filter((conveyance) => {
+        return  conveyance.buyer.id === userId;
+      });
+    }
+    return [];
   });
 }

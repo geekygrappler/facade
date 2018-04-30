@@ -1,2 +1,7 @@
 <h1>Dashboard</h1>
+
+{{#if currentUser.user.isSolicitor}}
+  {{solicitor-dashboard}}
+{{/if}}
+
 {{outlet}}

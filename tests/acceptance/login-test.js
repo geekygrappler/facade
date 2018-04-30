@@ -30,6 +30,9 @@ module('Acceptance | log in', function(hooks) {
         responseText: { access_token: JWT }
       });
 
+      let user = build('solicitor');
+      mockFindRecord('user').returns({ json: user });
+
       mockQuery('conveyance').returns({ json: buildList('conveyance', 3) });
 
       await visit('/login');
