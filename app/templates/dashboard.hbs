@@ -1,7 +1,9 @@
 <h1>Dashboard</h1>
 
 {{#if currentUser.user.isSolicitor}}
-  {{solicitor-dashboard}}
+  {{solicitor-dashboard
+    conveyances=conveyances
+  }}
 {{/if}}
 
 {{outlet}}

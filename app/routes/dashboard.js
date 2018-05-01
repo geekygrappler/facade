@@ -10,5 +10,9 @@ export default Route.extend(AuthenticatedRouteMixin, {
       filter: { userId: this.get('currentUser.id') } ,
       include: 'address,tasks'
     });
+  },
+
+  setupController(controller, model) {
+    controller.set('conveyances', model);
   }
 });

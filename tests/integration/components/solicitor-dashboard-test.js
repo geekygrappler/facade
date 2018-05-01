@@ -2,25 +2,21 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import { setupFactoryGuy, makeList } from 'ember-data-factory-guy';
+
 
 module('Integration | Component | solicitor-dashboard', function(hooks) {
   setupRenderingTest(hooks);
+  setupFactoryGuy(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders the conveyances', async function(assert) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.set('myAction', function(val) { ... });
 
-    await render(hbs`{{solicitor-dashboard}}`);
+    this.set('conveyances', makeList('conveyance', 3));
 
-    assert.equal(this.element.textContent.trim(), '');
+    await render(hbs`{{solicitor-dashboard conveyances=conveyances}}`);
 
-    // Template block usage:
-    await render(hbs`
-      {{#solicitor-dashboard}}
-        template block text
-      {{/solicitor-dashboard}}
-    `);
-
-    assert.equal(this.element.textContent.trim(), 'template block text');
+    assert.dom('[data-test-conveyance-summary]').exists({ count: 3 });
   });
 });
