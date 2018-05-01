@@ -15,7 +15,7 @@ module('Unit | Adapter | application', function(hooks) {
     });
     assert.equal(
       adapter.get('headers')['AUTHORIZATION'],
-      'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiIxMiJ9.H2aRRkffDBrCUba2RwVDhNSuDfYCvZrKaK128ht9h9w'
+      'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiIxMiJ9.H2aRRkffDBrCUba2RwVDhNSuDfYCvZrKaK128ht9h9w'
     );
   });
 });

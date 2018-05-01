@@ -7,7 +7,7 @@ export default DS.JSONAPIAdapter.extend({
   headers: computed('session.isAuthenticated', function() {
     let token = this.get('session').get('data').authenticated.access_token;
     return {
-      'AUTHORIZATION': token
+      'AUTHORIZATION': `Bearer ${token}`
     };
   })
 });
