@@ -10,4 +10,6 @@
 <p>Status</p>
 <span data-test-status>{{conveyance.numberOfCompleteTasks}}/{{conveyance.tasks.length}} tasks complete</span>
 
+{{#link-to 'conveyances.show' conveyance}}View this case{{/link-to}}
+
 {{yield}}
