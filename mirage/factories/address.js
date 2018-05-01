@@ -1,7 +1,7 @@
-import { Factory } from 'ember-cli-mirage';
+import { Factory, faker } from 'ember-cli-mirage';
 
 export default Factory.extend({
-  street: '123 Coldharbour Lane',
-  city: 'London',
-  postcode: 'SE19 8LU',
+  street() { return faker.address.streetAddress(); },
+  city() { return faker.address.city(); },
+  postcode() { return faker.address.zipCode(); }
 });
