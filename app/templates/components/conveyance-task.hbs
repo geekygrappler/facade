@@ -1,5 +1,23 @@
-<h3 data-test-title>{{task.title}}</h3>
-<p data-test-status>Status: {{status}}</p>
-<p data-test-description>{{task.description}}</p>
+{{#if toggleComplete.isRunning}}
+  <p data-test-loading-spinner>The task is updating</p>
+{{else}}
+  <h3 data-test-title>{{task.title}}</h3>
+  <p data-test-status>
+    Status: {{status}}
+    {{#if currentUser.user.isSolicitor}}
+      <button
+        onclick={{perform toggleComplete}}
+        data-test-completed-toggle
+      >
+        {{#if task.complete}}
+          Mark Outstanding
+        {{else}}
+          Mark Complete
+        {{/if}}
+      </button>
+    {{/if}}
+  </p>
+  <p data-test-description>{{task.description}}</p>
 
-{{yield}}
+  {{yield}}
+{{/if}}
