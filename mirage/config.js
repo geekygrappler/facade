@@ -63,4 +63,6 @@ export default function() {
     }
     return [];
   });
+
+  this.patch('/tasks/:id');
 }
