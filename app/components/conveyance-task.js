@@ -39,6 +39,7 @@ export default Component.extend({
       this.set('editingNotes', !oldValue);
     },
     cancelEditing() {
+      // TODO rollbackAttribute('notes) seems to be missing from ED 3.1 check whether it's been depreciated.
       this.task.rollbackAttributes();
       this.send('toggleIsEditing');
     }
