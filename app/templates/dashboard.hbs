@@ -4,6 +4,10 @@
   {{solicitor-dashboard
     conveyances=conveyances
   }}
+{{else if currentUser.user.isBuyer}}
+  {{buyer-dashboard
+    conveyances=conveyances
+  }}
 {{/if}}
 
 {{outlet}}
