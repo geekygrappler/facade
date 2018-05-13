@@ -3,6 +3,7 @@ import FactoryGuy from 'ember-data-factory-guy';
 FactoryGuy.define('task', {
   default: {
     title: 'Default Task Title',
-    description: 'A default description'
+    description: 'A default description',
+    notes: 'Some default notes'
   }
 });
