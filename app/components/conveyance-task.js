@@ -15,9 +15,9 @@ export default Component.extend({
 
   status: conditional('task.complete', raw('complete'), raw('outstanding')),
 
-  notesAreUnedited: computed('task.notes', function() {
+  notesAreUnedited: computed('task.hasDirtyAttributes', function() {
     let { task } = this;
-    return !task.changedAttributes().notes;
+    return !task.hasDirtyAttributes;
   }),
 
   toggleComplete: task(function * () {

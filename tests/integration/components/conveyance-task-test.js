@@ -105,6 +105,30 @@ module('Integration | Component | conveyance-task', function(hooks) {
       assert.dom('[data-test-save-notes-button]').doesNotHaveAttribute('disabled');
     });
 
+    test('after editing and trying to edit again the save button is disabled', async function(assert) {
+      let task = make('task', { complete: false });
+      this.set('task', task);
+      mockUpdate(task);
+
+      await render(hbs`
+        {{conveyance-task
+          task=task
+        }}
+      `);
+
+      await click('[data-test-edit-notes-button]');
+
+      assert.dom('[data-test-save-notes-button]').hasAttribute('disabled');
+
+      await fillIn('[data-test-task-notes-editing-view]', 'Some new text');
+
+      await click('[data-test-save-notes-button]');
+
+      await click('[data-test-edit-notes-button]');
+
+      assert.dom('[data-test-save-notes-button]').hasAttribute('disabled');
+    });
+
     test('the notes can be edited successfully', async function(assert) {
       let task = make('task', { complete: false });
       this.set('task', task);
