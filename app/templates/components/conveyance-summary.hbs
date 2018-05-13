@@ -7,6 +7,14 @@
   <span>Property address not yet added</span>
 {{/if}}
 
+{{#if currentUser.user.isSolicitor}}
+  <p data-test-buyer-name>Buyer: {{conveyance.buyer.formattedName}}</p>
+{{/if}}
+
+{{#if currentUser.user.isBuyer}}
+  <p data-test-solicitor-name>Solicitor: {{conveyance.solicitor.formattedName}}</p>
+{{/if}}
+
 <p>Status</p>
 <span data-test-status>{{conveyance.numberOfCompleteTasks}}/{{conveyance.tasks.length}} tasks complete</span>
 

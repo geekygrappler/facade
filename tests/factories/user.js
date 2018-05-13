@@ -1,7 +1,11 @@
 import FactoryGuy from 'ember-data-factory-guy';
 
 FactoryGuy.define('user', {
-  default: {},
+  default: {
+    prefix: 'Mr.',
+    firstName: 'Tony',
+    lastName: 'Stark'
+  },
   solicitor: {
     role: 'solicitor'
   },
