@@ -24,8 +24,6 @@ module('Acceptance | conveyance', function(hooks) {
 
     assert.equal(currentURL(), '/conveyances/1', 'the URL is naviagable');
 
-    assert.dom('[data-test-conveyance-header]').containsText('Conveyances', 'The conveyance header is shown');
-
     assert.dom('[data-test-formatted-address]').exists('The address is shown');
 
     assert.dom('[data-test-conveyance-task]').exists({ count: 3 }, 'The tasks are shown');
