@@ -1,6 +1,8 @@
 <h3>Address</h3>
 {{formatted-address address=conveyance.address}}
 
+<h4>Status: {{conveyance.numberOfCompleteTasks}}/{{conveyance.tasks.length}} tasks complete</h4>
+
 <h2>Tasks</h2>
 {{#each conveyance.tasks as |task|}}
   {{conveyance-task task=task}}
