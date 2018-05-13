@@ -45,9 +45,9 @@ export default function() {
       });
     }
     if (request.requestBody.includes('new')) {
-      // user 3 is first new signup - what a mess
+      // user 5 is first new signup - what a mess
       return new Response(200, {}, {
-        access_token: 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiIzIn0._Z6l-zikrmOAYFnP-vvqSJkVBkquhyMnsqwW5U4s3WE'
+        access_token: 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiI1In0.pf_3Ff7QNFO7QfY3r409W_Odf2_sMASguQ6zpNXz40Y'
       });
     }
     return new Response(400, {}, {

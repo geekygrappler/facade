@@ -8,7 +8,9 @@ export default function(server) {
   // id: 1
   let solicitor = server.create('user', { role: 'solicitor' });
   // id: 2
-  let buyer = server.create('user', { role: 'buyer' });
+  let buyer1 = server.create('user', { role: 'buyer' });
+  let buyer2 = server.create('user', { role: 'buyer' });
+  let buyer3 = server.create('user', { role: 'buyer' });
 
   // server.createList('post', 10);
   server.createList('conveyance', 3, {
@@ -20,7 +22,16 @@ export default function(server) {
         server.create('task', 'mortgageApproval'),
       ];
     },
-    buyer,
+    buyer(i) {
+      switch(i) {
+        case 0:
+          return buyer1;
+        case 1:
+          return buyer2;
+        case 2:
+          return buyer3;
+      }
+    },
     solicitor
   });
 }
