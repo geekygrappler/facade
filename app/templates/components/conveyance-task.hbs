@@ -1,4 +1,4 @@
-{{#if toggleComplete.isRunning}}
+{{#if isSaveRunning}}
   <p data-test-loading-spinner>The task is updating</p>
 {{else}}
   <h3 data-test-title>{{task.title}}</h3>
@@ -19,5 +19,34 @@
   </p>
   <p data-test-description>{{task.description}}</p>
 
+  <h4>Case Notes</h4>
+  {{#if editingNotes}}
+    {{textarea
+      value=task.notes
+      rows=5
+      data-test-task-notes-editing-view=true
+    }}
+    <button
+      onclick={{perform saveNotes}}
+      disabled={{notesAreUnedited}}
+      data-test-save-notes-button
+    >
+      Save Changes
+    </button>
+    <button
+      onclick={{action "cancelEditing"}}
+      data-test-cancel-note-edit-button
+    >
+      Cancel
+    </button>
+  {{else}}
+    <p data-test-task-notes>{{task.notes}}</p>
+    <button
+      onclick={{action "toggleIsEditing"}}
+      data-test-edit-notes-button
+    >
+      Edit Notes
+    </button>
+  {{/if}}
   {{yield}}
 {{/if}}
