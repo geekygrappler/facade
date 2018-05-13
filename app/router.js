@@ -12,6 +12,7 @@ Router.map(function() {
     this.route('show', { path: ':id' });
   });
   this.route('login');
+  this.route('signup');
 });
 
 export default Router;

@@ -29,6 +29,7 @@ export default function() {
   this.get('/conveyances/:id');
 
   this.get('/users/:id');
+  this.post('/users');
 
   this.post('/token', (schema, request) => {
     if (request.requestBody.includes('solicitor')) {
@@ -41,6 +42,12 @@ export default function() {
       // user 2 is a buyer
       return new Response(200, {}, {
         access_token: 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiIyIn0.Hfisvn6GzGJeWNS_Z72SDV-jPjL18MX18cO0EA4nlcQ'
+      });
+    }
+    if (request.requestBody.includes('new')) {
+      // user 3 is first new signup - what a mess
+      return new Response(200, {}, {
+        access_token: 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiIzIn0._Z6l-zikrmOAYFnP-vvqSJkVBkquhyMnsqwW5U4s3WE'
       });
     }
     return new Response(400, {}, {
@@ -64,5 +71,9 @@ export default function() {
     return [];
   });
 
+  this.post('/conveyances');
+
   this.patch('/tasks/:id');
+
+  this.post('/addresses');
 }
