@@ -15,4 +15,9 @@ module('Unit | Model | user', function(hooks) {
     let model = make('buyer');
     assert.ok(model.isBuyer, 'A buyer user can be identified');
   });
+
+  test('formatted name', function(assert) {
+    let model = make('user', { prefix: 'hi', lastName: 'buddy' });
+    assert.equal(model.formattedName, 'hi buddy', 'The formatted name is calculated');
+  });
 });

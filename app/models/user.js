@@ -1,4 +1,5 @@
 import DS from 'ember-data';
+import { computed } from '@ember/object';
 import { equal } from 'ember-awesome-macros';
 import raw from 'ember-macro-helpers/raw';
 
@@ -10,5 +11,9 @@ export default DS.Model.extend({
   email: DS.attr('string'),
 
   isSolicitor: equal('role', raw('solicitor')),
-  isBuyer: equal('role', raw('buyer'))
+  isBuyer: equal('role', raw('buyer')),
+
+  formattedName: computed('prefix', 'lastName', function() {
+    return `${this.prefix} ${this.lastName}`;
+  })
 });
