@@ -8,7 +8,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
   model() {
     return this.get('store').query('conveyance', {
       filter: { userId: this.get('currentUser.id') } ,
-      include: 'address,tasks'
+      include: 'address,tasks,solicitor,buyer'
     });
   },
 
