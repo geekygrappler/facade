@@ -1,0 +1,69 @@
+{{#if signup.isRunning}}
+  <p>Signing you up</p>
+{{else}}
+  <form
+    onsubmit={{perform onSignup userData addressData}}
+    data-test-signup-form
+  >
+    <select
+      name="prefix"
+      onchange={{action "setPrefix" value="target.value"}}
+      data-test-prefix-select
+    >
+      <option value="Mr">Mr.</option>
+      <option value="Mrs">Mrs.</option>
+      <option value="Miss">Miss</option>
+    </select>
+    {{input
+      type="text"
+      value=userData.firstName
+      placeholder="first name"
+      data-test-first-name-input=true
+    }}
+    {{input
+      type="text"
+      value=userData.lastName
+      placeholder="last name"
+      data-test-last-name-input=true
+    }}
+    {{input
+      type="email"
+      value=userData.email
+      placeholder="email"
+      data-test-email-input=true
+    }}
+    {{input
+      type="password"
+      value=userData.password
+      placeholder="password"
+      data-test-password-input=true
+    }}
+    <br>
+    <p>Address of purchase property</p>
+    {{input
+      type="text"
+      value=addressData.street
+      placeholder="street"
+      data-test-street-input=true
+    }}
+    {{input
+      type="text"
+      value=addressData.city
+      placeholder="city"
+      data-test-city-input=true
+    }}
+    {{input
+      type="text"
+      value=addressData.postcode
+      placeholder="postcode"
+      data-test-postcode-input=true
+    }}
+    <br>
+    <button
+      type="submit"
+      data-test-submit-button
+    >
+      Sign up
+    </button>
+  </form>
+{{/if}}
