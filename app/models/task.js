@@ -16,5 +16,10 @@ export default DS.Model.extend({
   /**
    * Helpful information for the buyer to understand this task
    */
-  description: DS.attr('string')
+  description: DS.attr('string'),
+
+  /**
+   * Text input for notes
+   */
+  notes: DS.attr('string')
 });
