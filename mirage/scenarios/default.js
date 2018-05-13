@@ -13,7 +13,13 @@ export default function(server) {
   // server.createList('post', 10);
   server.createList('conveyance', 3, {
     address() { return server.create('address'); },
-    tasks() { return server.createList('task', 3); },
+    tasks() {
+      return [
+        server.create('task', 'buyersIdentificaiton'),
+        server.create('task', 'chancel'),
+        server.create('task', 'mortgageApproval'),
+      ];
+    },
     buyer,
     solicitor
   });
