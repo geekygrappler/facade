@@ -48,9 +48,7 @@ module('Acceptance | dashboard', function(hooks) {
     test('visiting /dashboard', async function(assert) {
       await visit('/dashboard');
 
-      assert.equal(currentURL(), '/dashboard');
-
-      assert.dom('[data-test-buyer-dashboard]').exists();
+      assert.equal(currentURL(), '/conveyances/1');
     });
   });
 });

@@ -12,6 +12,20 @@ export default Route.extend(AuthenticatedRouteMixin, {
     });
   },
 
+  /**
+   * After we've collected the user's conveyances, if we have a buyer
+   * we will transition to the (TODO active/current/first) case.
+   * @param [Conveyances] model
+   */
+  afterModel(model) {
+    return this.currentUser.user.then((user) => {
+      let latestConveyance = model.get('firstObject');
+      if (user.role === 'buyer') {
+        this.transitionTo('conveyances.show', latestConveyance);
+      }
+    });
+  },
+
   setupController(controller, model) {
     controller.set('conveyances', model);
   }

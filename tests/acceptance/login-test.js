@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { visit, currentURL, click } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
-import { setupFactoryGuy, mock, mockQuery, buildList, build, mockFindRecord } from 'ember-data-factory-guy';
+import { setupFactoryGuy, mock, mockQuery, buildList, build, mockFindRecord, make } from 'ember-data-factory-guy';
 import { JWT } from '../helpers/users';
 
 module('Acceptance | log in', function(hooks) {
@@ -23,57 +23,82 @@ module('Acceptance | log in', function(hooks) {
   });
 
   module('authenticated users', function() {
-    test('after successful login the user is redirected to the dashboard', async function(assert) {
-      mock({
-        type: 'POST',
-        url: '/token',
-        responseText: { access_token: JWT }
+    module('a solicitor', function() {
+      test('after successful login the solictor is redirected to their dashboard', async function(assert) {
+        mock({
+          type: 'POST',
+          url: '/token',
+          responseText: { access_token: JWT }
+        });
+
+        let user = build('solicitor');
+        mockFindRecord('user').returns({ json: user });
+
+        mockQuery('conveyance').returns({ json: buildList('conveyance', 3) });
+
+        await visit('/login');
+
+        await click('[data-test-login-button]');
+
+        assert.equal(currentURL(), '/dashboard', 'A solicitor is redirected to dashboard after login');
       });
 
-      let user = build('solicitor');
-      mockFindRecord('user').returns({ json: user });
+      test('should be redirected to their dashboard if they try to access \'/login\'', async function(assert) {
+        let session = this.owner.lookup('service:session');
+        session.set('isAuthenticated', true);
+        session.set('data', {
+          authenticated: { access_token: JWT }
+        });
 
-      mockQuery('conveyance').returns({ json: buildList('conveyance', 3) });
+        let user = build('solicitor');
+        mockFindRecord('user').returns({ json: user });
 
-      await visit('/login');
+        mockQuery('conveyance').returns({ json: buildList('conveyance', 3) });
 
-      await click('[data-test-login-button]');
+        await visit('/login');
 
-      assert.equal(currentURL(), '/dashboard', 'The user is redirected to dashboard after login');
+        assert.equal(currentURL(), '/dashboard', 'A solicitor is redirected to dashboard when already logged in');
+      });
+
+      test('when the application loads the user will be available if the session is authenticated', async function(assert) {
+        let session = this.owner.lookup('service:session');
+        session.set('isAuthenticated', true);
+        session.set('data', {
+          authenticated: { access_token: JWT }
+        });
+
+        let user = build('solicitor');
+        mockFindRecord('user').returns({ json: user });
+
+        await visit('/');
+
+        let store = this.owner.lookup('service:store');
+
+        assert.equal(store.peekRecord('user', user.get('id')).get('id'), user.get('id'), 'The user is loaded when the session is authenticated');
+      });
     });
 
-    test('authenticated users should be redirected to their dashboard if they try to access \'/login\'', async function(assert) {
-      let session = this.owner.lookup('service:session');
-      session.set('isAuthenticated', true);
-      session.set('data', {
-        authenticated: { access_token: JWT }
+    module('a buyer', function() {
+      test('will be redirected to their conveyance case', async function(assert) {
+        mock({
+          type: 'POST',
+          url: '/token',
+          responseText: { access_token: JWT }
+        });
+
+        let user = build('buyer');
+        mockFindRecord('user').returns({ json: user });
+
+        let conveyance = make('conveyance');
+
+        mockQuery('conveyance').returns({ models: [conveyance] });
+
+        await visit('/login');
+
+        await click('[data-test-login-button]');
+
+        assert.equal(currentURL(), `/conveyances/${conveyance.id}`, 'The user is redirected to dashboard after login');
       });
-
-      let user = build('user');
-      mockFindRecord('user').returns({ json: user });
-
-      mockQuery('conveyance').returns({ json: buildList('conveyance', 3) });
-
-      await visit('/login');
-
-      assert.equal(currentURL(), '/dashboard', 'The user is redirected to dashboard when already logged in');
-    });
-
-    test('when the application loads the user will be available if the session is authenticated', async function(assert) {
-      let session = this.owner.lookup('service:session');
-      session.set('isAuthenticated', true);
-      session.set('data', {
-        authenticated: { access_token: JWT }
-      });
-
-      let user = build('user');
-      mockFindRecord('user').returns({ json: user });
-
-      await visit('/');
-
-      let store = this.owner.lookup('service:store');
-
-      assert.equal(store.peekRecord('user', user.get('id')).get('id'), user.get('id'), 'The user is loaded when the session is authenticated');
     });
   });
 });
