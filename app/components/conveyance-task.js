@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { reads } from '@ember/object/computed';
 import { conditional, or } from 'ember-awesome-macros';
 import raw from 'ember-macro-helpers/raw';
 import { task } from 'ember-concurrency';
@@ -8,6 +9,9 @@ import { inject as service } from '@ember/service';
 export default Component.extend({
   'data-test-conveyance-task': true,
   currentUser: service(),
+
+  isSolicitor: reads('currentUser.user.isSolicitor'),
+  isBuyer: reads('currentUser.user.isBuyer'),
 
   editingNotes: false,
 

@@ -4,7 +4,7 @@
   <h3 data-test-title>{{task.title}}</h3>
   <p data-test-status>
     Status: {{status}}
-    {{#if currentUser.user.isSolicitor}}
+    {{#if isSolicitor}}
       <button
         onclick={{perform toggleComplete}}
         data-test-completed-toggle
