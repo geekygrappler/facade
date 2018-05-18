@@ -21,5 +21,15 @@ export default DS.Model.extend({
   /**
    * Text input for notes
    */
-  notes: DS.attr('string')
+  notes: DS.attr('string'),
+
+  /**
+   * Actions for a buyer
+   */
+  buyerActions: DS.hasMany('task-action'),
+
+  /**
+   * Actions for a solicitor
+   */
+  solicitorActions: DS.hasMany('task-action')
 });
