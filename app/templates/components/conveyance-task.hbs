@@ -19,6 +19,25 @@
   </p>
   <p data-test-description>{{task.description}}</p>
 
+  {{#each task.buyerActions as |action|}}
+    {{#if action.isDocumentUpload}}
+      {{#if action.documents}}
+        {{#each action.documents as |document|}}
+          <p data-test-document-download>Document download placeholder</p>
+        {{/each}}
+      {{else}}
+        {{#if isBuyer}}
+          {{task-action
+            action=action
+            data-test-buyer-action=true
+          }}
+        {{else}}
+          <p data-test-buyer-action-solicitor-message>Awaiting buyer to upload documents</p>
+        {{/if}}
+      {{/if}}
+    {{/if}}
+  {{/each}}
+
   <h4>Case Notes</h4>
   {{#if editingNotes}}
     {{textarea
