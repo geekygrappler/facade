@@ -67,58 +67,6 @@ module('Integration | Component | conveyance-task', function(hooks) {
     });
   });
 
-  module('buyer actions', function() {
-    module('document uploads', function() {
-
-      test('if the task has documents they are shown and the action is not', async function(assert) {
-        let document = make('document');
-        let action = make('task-action', { type: 'document-upload', documents: [document] });
-        let task = make('task', { buyerActions: [ action ] });
-        this.set('task', task);
-        this.owner.lookup('service:currentUser').set('user', make('buyer'));
-        await render(hbs`
-          {{conveyance-task
-            task=task
-          }}
-        `);
-
-        assert.dom('[data-test-document-download]').exists({ count: 1 });
-        assert.dom('[data-test-buyer-action]').doesNotExist();
-      });
-
-      module('as a buyer', function() {
-        test('incomplete buyer actions are shown', async function(assert) {
-          let task = make('task', { buyerActions: [make('task-action', { type: 'document-upload' })] });
-          this.set('task', task);
-          this.owner.lookup('service:currentUser').set('user', make('buyer'));
-          await render(hbs`
-            {{conveyance-task
-              task=task
-            }}
-          `);
-
-          assert.dom('[data-test-buyer-action]').exists({ count: 1 });
-          assert.dom('[data-test-document-download]').doesNotExist();
-        });
-      });
-
-      module('as a solicitor', function() {
-        test('message about incomplete buyer actions are shown', async function(assert) {
-          let task = make('task', { buyerActions: [make('task-action', { type: 'document-upload' })] });
-          this.set('task', task);
-          this.owner.lookup('service:currentUser').set('user', make('solicitor'));
-          await render(hbs`
-            {{conveyance-task
-              task=task
-            }}
-          `);
-
-          assert.dom('[data-test-buyer-action-solicitor-message]').exists({ count: 1 });
-        });
-      });
-    });
-  });
-
   module('notes', function() {
     test('they can be edited', async function(assert) {
       let task = make('task', { complete: false });

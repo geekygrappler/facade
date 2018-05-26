@@ -12,12 +12,11 @@ export default function(server) {
   let buyer2 = server.create('user', { role: 'buyer' });
   let buyer3 = server.create('user', { role: 'buyer' });
 
-  // server.createList('post', 10);
   server.createList('conveyance', 3, {
     address() { return server.create('address'); },
     tasks() {
       return [
-        server.create('task', 'buyersIdentificaiton'),
+        server.create('task', 'buyersIdentification'),
         server.create('task', 'chancel'),
         server.create('task', 'mortgageApproval'),
       ];

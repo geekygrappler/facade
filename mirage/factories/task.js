@@ -6,9 +6,12 @@ export default Factory.extend({
   description() { return faker.lorem.sentences(); },
   notes() { return faker.lorem.sentences(); },
 
-  buyersIdentificaiton: trait({
+  buyersIdentification: trait({
     title: 'Buyers identification',
-    description: 'Please upload proof of your identity.',
+    description: 'For the purchase we need to confirm your identity. Money laundering etc.',
+    afterCreate(task, server) {
+      task.buyerActions = server.createList('task-action', 1, { type: 'document-upload' });
+    }
   }),
   chancel: trait({
     title: 'Chancel repair liability',
