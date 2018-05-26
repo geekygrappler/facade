@@ -3,7 +3,7 @@ import Route from '@ember/routing/route';
 export default Route.extend({
   model(params) {
     return this.get('store').findRecord('conveyance', params.id, {
-      include: 'address,tasks',
+      include: 'address,solicitor,buyer,tasks,tasks.buyer-actions',
       reload: true
     });
   },

@@ -1,6 +1,13 @@
 <h3>Address</h3>
 {{formatted-address address=conveyance.address}}
 
+{{#if currentUser.user.isBuyer}}
+  <strong>Solicitor: {{conveyance.solicitor.formattedName}}</strong>
+{{/if}}
+{{#if currentUser.user.isSolicitor}}
+  <strong>Buyer: {{conveyance.buyer.formattedName}}</strong>
+{{/if}}
+
 <h4>Status: {{conveyance.numberOfCompleteTasks}}/{{conveyance.tasks.length}} tasks complete</h4>
 
 <h2>Tasks</h2>
