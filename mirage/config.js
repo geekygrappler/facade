@@ -76,4 +76,11 @@ export default function() {
   this.patch('/tasks/:id');
 
   this.post('/addresses');
+
+  this.post('/documents');
+  this.post('/s3/some/bucket', () => {
+    return new Response(200, { Location: 'www.amazon.com/s3/some/bucket/123abc' }, {});
+  });
+
+  this.patch('/task-actions/:id');
 }

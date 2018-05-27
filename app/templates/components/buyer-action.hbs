@@ -1,12 +1,17 @@
 {{#if action.isDocumentUpload}}
   {{#if action.documents}}
     {{#each action.documents as |document|}}
-      <p data-test-document-download>Document download placeholder</p>
+      <p data-test-document-download>
+        {{document.name}} -
+        <a href={{document.url}}>Download now</a>
+      </p>
     {{/each}}
   {{else}}
     {{#if isBuyer}}
       {{task-action
         action=action
+        onFileAdd=uploadDocument
+        onDrop=multipleDocumentUpload
         data-test-buyer-action=true
       }}
     {{else}}
