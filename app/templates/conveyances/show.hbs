@@ -1,16 +1,24 @@
-<h3>Address</h3>
-{{formatted-address address=conveyance.address}}
+<div class="show-container">
+  <div class="side-bar">
+    <h3>Address</h3>
+    {{formatted-address address=conveyance.address}}
 
-{{#if currentUser.user.isBuyer}}
-  <strong>Solicitor: {{conveyance.solicitor.formattedName}}</strong>
-{{/if}}
-{{#if currentUser.user.isSolicitor}}
-  <strong>Buyer: {{conveyance.buyer.formattedName}}</strong>
-{{/if}}
+    {{#if currentUser.user.isBuyer}}
+      <strong>Solicitor: {{conveyance.solicitor.formattedName}}</strong>
+    {{/if}}
+    {{#if currentUser.user.isSolicitor}}
+      <strong>Buyer: {{conveyance.buyer.formattedName}}</strong>
+    {{/if}}
 
-<h4>Status: {{conveyance.numberOfCompleteTasks}}/{{conveyance.tasks.length}} tasks complete</h4>
-
-<h2>Tasks</h2>
-{{#each conveyance.tasks as |task|}}
-  {{conveyance-task task=task}}
-{{/each}}
+    <h4>Status: {{conveyance.numberOfCompleteTasks}}/{{conveyance.tasks.length}} tasks complete</h4>
+  </div>
+  <div class="main-view">
+    <h2>Tasks</h2>
+    {{#each conveyance.tasks as |task|}}
+      {{conveyance-task
+        class="conveyance-task"
+        task=task
+      }}
+    {{/each}}
+  </div>
+</div>

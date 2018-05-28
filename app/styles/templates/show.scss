@@ -1,0 +1,18 @@
+.show-container {
+  display: flex;
+}
+
+.side-bar {
+  flex-grow: 2;
+  flex-basis: 0px;
+  border-right: 1px solid black;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.main-view {
+  margin-left: 1rem;
+  margin-right: 1rem;
+  flex-grow: 8;
+  flex-basis: 0px;
+}
