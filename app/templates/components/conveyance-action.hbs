@@ -1,0 +1,23 @@
+{{#if action.isDocumentUpload}}
+  {{#if action.documents}}
+    {{#each action.documents as |document|}}
+      <p data-test-document-download>
+        {{document.name}} -
+        <a href={{document.url}}>Download now</a>
+      </p>
+    {{/each}}
+  {{else}}
+    {{#if isOwner}}
+      {{task-action
+        action=action
+        onFileAdd=uploadDocument
+        onDrop=multipleDocumentUpload
+        data-test-buyer-action=true
+      }}
+    {{else}}
+      <p data-test-non-owner-message>Awaiting {{owner}} to upload documents</p>
+    {{/if}}
+  {{/if}}
+{{/if}}
+
+{{yield}}

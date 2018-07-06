@@ -20,7 +20,11 @@
   <p data-test-description>{{task.description}}</p>
 
   {{#each task.buyerActions as |action|}}
-    {{buyer-action action=action}}
+    {{conveyance-action action=action owner="buyer"}}
+  {{/each}}
+
+  {{#each task.solicitorActions as |action|}}
+    {{conveyance-action action=action owner="solicitor"}}
   {{/each}}
 
   <h4>Case Notes</h4>

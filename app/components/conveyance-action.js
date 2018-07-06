@@ -1,0 +1,46 @@
+import Component from '@ember/component';
+import { reads } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import { task } from 'ember-concurrency';
+import { equal } from 'ember-awesome-macros';
+
+export default Component.extend({
+  currentUser: service(),
+  store: service(),
+
+  isBuyer: reads('currentUser.user.isBuyer'),
+  isSolicitor: reads('currentUser.user.isSolicitor'),
+
+  isOwner: equal('currentUser.user.role', 'owner'),
+
+  multipleDocumentUpload: task(function * (queue) {
+    yield queue.files.reduce(file => this.uploadDocument(file));
+  }),
+
+  uploadDocument: task(function * (file) {
+    let { action } = this;
+    let document = this.store.createRecord('document', {
+      name: file.name
+    });
+    action.documents.pushObject(document);
+
+    try {
+      file.readAsDataURL().then(function (url) {
+        if (document.url == null) {
+          document.set('url', url);
+        }
+      });
+
+      let response = yield file.upload('/s3/some/bucket');
+      document.set('url', response.headers.Location);
+      yield document.save();
+    } catch (e) {
+      document.rollback();
+    }
+    try {
+      yield action.save();
+    } catch (e) {
+      action.rollback();
+    }
+  }).maxConcurrency(3).enqueue(),
+});
