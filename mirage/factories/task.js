@@ -16,6 +16,9 @@ export default Factory.extend({
   chancel: trait({
     title: 'Chancel repair liability',
     description: 'Chancel repair liability should be bought.',
+    afterCreate(task, server) {
+      task.solicitorActions = server.createList('task-action', 1, { type: 'document-upload' });
+    }
   }),
   mortgageApproval: trait({
     title: 'Mortgage Approval Document',
