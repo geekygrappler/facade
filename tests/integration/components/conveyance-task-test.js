@@ -42,11 +42,13 @@ module('Integration | Component | conveyance-task', function(hooks) {
     assert.dom('[data-test-description]').containsText('A default description', 'The task\'s description should be displayed');
   });
 
-  module('for solicitors', function() {
+  module('for solicitors', function(hooks) {
+    hooks.beforeEach(function() {
+      this.owner.lookup('service:currentUser').set('user', make('solicitor'));
+    });
     test('they can toggle the completed value of the task', async function(assert) {
       let task = make('task', { complete: false });
       this.set('task', task);
-      this.owner.lookup('service:currentUser').set('user', make('solicitor'));
       mockUpdate(task);
       await render(hbs`
         {{conveyance-task
@@ -65,109 +67,140 @@ module('Integration | Component | conveyance-task', function(hooks) {
       assert.notOk(task.complete, 'task should be marked as incomplete after button is clicked');
       assert.dom('[data-test-completed-toggle]').containsText('Mark Complete', 'The task toggle button shows correct text when task is incomplete');
     });
+    module('notes', function() {
+      test('they can be edited', async function(assert) {
+        let task = make('task');
+        this.set('task', task);
+
+        await render(hbs`
+          {{conveyance-task
+            task=task
+          }}
+        `);
+
+        assert.dom('[data-test-task-notes]').exists();
+        assert.dom('[data-test-task-notes-editing-view]').doesNotExist();
+        await click('[data-test-edit-notes-button]');
+
+        assert.dom('[data-test-task-notes-editing-view]').exists();
+        assert.dom('[data-test-task-notes]').doesNotExist();
+      });
+
+      test('before editing the save button is disabled, once edited it is enabled', async function(assert) {
+        let task = make('task');
+        this.set('task', task);
+
+        await render(hbs`
+          {{conveyance-task
+            task=task
+          }}
+        `);
+
+        await click('[data-test-edit-notes-button]');
+
+        assert.dom('[data-test-save-notes-button]').hasAttribute('disabled');
+
+        await fillIn('[data-test-task-notes-editing-view]', 'Some new text');
+
+        assert.dom('[data-test-save-notes-button]').doesNotHaveAttribute('disabled');
+      });
+
+      test('after editing and trying to edit again the save button is disabled', async function(assert) {
+        let task = make('task');
+        this.set('task', task);
+        mockUpdate(task);
+
+        await render(hbs`
+          {{conveyance-task
+            task=task
+          }}
+        `);
+
+        await click('[data-test-edit-notes-button]');
+
+        assert.dom('[data-test-save-notes-button]').hasAttribute('disabled');
+
+        await fillIn('[data-test-task-notes-editing-view]', 'Some new text');
+
+        await click('[data-test-save-notes-button]');
+
+        await click('[data-test-edit-notes-button]');
+
+        assert.dom('[data-test-save-notes-button]').hasAttribute('disabled');
+      });
+
+      test('the notes can be edited successfully', async function(assert) {
+        let task = make('task');
+        this.set('task', task);
+        mockUpdate(task);
+        await render(hbs`
+          {{conveyance-task
+            task=task
+          }}
+        `);
+
+        await click('[data-test-edit-notes-button]');
+
+        await fillIn('[data-test-task-notes-editing-view]', 'Some new text');
+
+        await click('[data-test-save-notes-button]');
+
+        assert.dom('[data-test-task-notes-editing-view]').doesNotExist();
+
+        assert.dom('[data-test-task-notes]').containsText('Some new text');
+      });
+
+      test('cancelling note editing resets to the original state', async function(assert) {
+        let task = make('task');
+        this.set('task', task);
+        await render(hbs`
+          {{conveyance-task
+            task=task
+          }}
+        `);
+
+        await click('[data-test-edit-notes-button]');
+
+        await fillIn('[data-test-task-notes-editing-view]', 'Some new text');
+
+        await click('[data-test-cancel-note-edit-button]');
+
+        assert.dom('[data-test-task-notes-editing-view]').doesNotExist();
+
+        assert.dom('[data-test-task-notes]').containsText(task.notes);
+      });
+    });
   });
 
-  module('notes', function() {
-    test('they can be edited', async function(assert) {
-      let task = make('task', { complete: false });
-      this.set('task', task);
-
-      await render(hbs`
-        {{conveyance-task
-          task=task
-        }}
-      `);
-
-      assert.dom('[data-test-task-notes]').exists();
-      assert.dom('[data-test-task-notes-editing-view]').doesNotExist();
-      await click('[data-test-edit-notes-button]');
-
-      assert.dom('[data-test-task-notes-editing-view]').exists();
-      assert.dom('[data-test-task-notes]').doesNotExist();
+  module('for buyers', function(hooks) {
+    hooks.beforeEach(function() {
+      this.owner.lookup('service:currentUser').set('user', make('buyer'));
     });
-
-    test('before editing the save button is disabled, once edited it is enabled', async function(assert) {
+    test('they can only see the the completed value of the task, not edit it', async function(assert) {
       let task = make('task', { complete: false });
       this.set('task', task);
-
       await render(hbs`
         {{conveyance-task
           task=task
         }}
       `);
 
-      await click('[data-test-edit-notes-button]');
-
-      assert.dom('[data-test-save-notes-button]').hasAttribute('disabled');
-
-      await fillIn('[data-test-task-notes-editing-view]', 'Some new text');
-
-      assert.dom('[data-test-save-notes-button]').doesNotHaveAttribute('disabled');
+      assert.dom('[data-test-completed-toggle]').doesNotExist();
     });
+    module('notes', function() {
+      test('they can not be edited', async function(assert) {
+        let task = make('task');
+        this.set('task', task);
 
-    test('after editing and trying to edit again the save button is disabled', async function(assert) {
-      let task = make('task', { complete: false });
-      this.set('task', task);
-      mockUpdate(task);
+        await render(hbs`
+          {{conveyance-task
+            task=task
+          }}
+        `);
 
-      await render(hbs`
-        {{conveyance-task
-          task=task
-        }}
-      `);
-
-      await click('[data-test-edit-notes-button]');
-
-      assert.dom('[data-test-save-notes-button]').hasAttribute('disabled');
-
-      await fillIn('[data-test-task-notes-editing-view]', 'Some new text');
-
-      await click('[data-test-save-notes-button]');
-
-      await click('[data-test-edit-notes-button]');
-
-      assert.dom('[data-test-save-notes-button]').hasAttribute('disabled');
-    });
-
-    test('the notes can be edited successfully', async function(assert) {
-      let task = make('task', { complete: false });
-      this.set('task', task);
-      mockUpdate(task);
-      await render(hbs`
-        {{conveyance-task
-          task=task
-        }}
-      `);
-
-      await click('[data-test-edit-notes-button]');
-
-      await fillIn('[data-test-task-notes-editing-view]', 'Some new text');
-
-      await click('[data-test-save-notes-button]');
-
-      assert.dom('[data-test-task-notes-editing-view]').doesNotExist();
-
-      assert.dom('[data-test-task-notes]').containsText('Some new text');
-    });
-
-    test('cancelling note editing resets to the original state', async function(assert) {
-      let task = make('task', { complete: false });
-      this.set('task', task);
-      await render(hbs`
-        {{conveyance-task
-          task=task
-        }}
-      `);
-
-      await click('[data-test-edit-notes-button]');
-
-      await fillIn('[data-test-task-notes-editing-view]', 'Some new text');
-
-      await click('[data-test-cancel-note-edit-button]');
-
-      assert.dom('[data-test-task-notes-editing-view]').doesNotExist();
-
-      assert.dom('[data-test-task-notes]').containsText(task.notes);
+        assert.dom('[data-test-task-notes]').exists();
+        assert.dom('[data-test-edit-notes-button]').doesNotExist();
+      });
     });
   });
 });

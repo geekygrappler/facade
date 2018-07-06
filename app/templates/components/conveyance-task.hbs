@@ -45,12 +45,14 @@
     </button>
   {{else}}
     <p data-test-task-notes>{{task.notes}}</p>
-    <button
-      onclick={{action "toggleIsEditing"}}
-      data-test-edit-notes-button
-    >
-      Edit Notes
-    </button>
+    {{#if currentUser.user.isSolicitor}}
+      <button
+        onclick={{action "toggleIsEditing"}}
+        data-test-edit-notes-button
+      >
+        Edit Notes
+      </button>
+    {{/if}}
   {{/if}}
   {{yield}}
 {{/if}}
