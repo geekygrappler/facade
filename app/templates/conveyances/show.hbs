@@ -4,7 +4,7 @@
     {{formatted-address address=conveyance.address}}
 
     {{#if currentUser.user.isBuyer}}
-      <strong>Solicitor: {{conveyance.solicitor.formattedName}}</strong>
+      <strong data-test-solicitor-name>Solicitor: {{conveyance.solicitor.formattedName}}</strong>
     {{/if}}
     {{#if currentUser.user.isSolicitor}}
       <strong>Buyer: {{conveyance.buyer.formattedName}}</strong>
