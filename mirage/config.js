@@ -71,7 +71,17 @@ export default function() {
     return [];
   });
 
-  this.post('/conveyances');
+  /**
+   * Assign any new conveyances to our solicitor
+   */
+  this.post('/conveyances', (schema, request) => {
+    let { data } = JSON.parse(request.requestBody);
+    let conveyance = schema.conveyances.create({
+      buyerId: data.relationships.buyer.data.id,
+      solicitor: schema.users.find(1)
+    });
+    return conveyance;
+  }, 201);
 
   this.patch('/tasks/:id');
 
