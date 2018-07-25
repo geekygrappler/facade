@@ -4,30 +4,27 @@ import { inject as service } from '@ember/service';
 
 export default Controller.extend({
   session: service(),
+  store: service(),
   signup: task(function * (userData, addressData, event) {
     event.preventDefault();
-    let { user, address, conveyance } = this;
-    user.setProperties(userData);
+    let buyer;
     try {
-      yield user.save();
+      buyer = yield this.get('store').createRecord('user', Object.assign(userData, { role: 'buyer' })).save();
     } catch(e) {
       Error(e);
     }
 
-    try {
-      yield this.get('session').authenticate('authenticator:oauth2', user.email, user.password);
-    } catch(e) {
-      Error(e);
-    }
+    let address = this.get('store').createRecord('address', addressData);
 
-    address.setProperties(addressData);
+    let conveyance = this.get('store').createRecord('conveyance', {
+      address,
+      buyer
+    });
 
-    conveyance.set('address', address);
-    conveyance.set('buyer', user);
     try {
       yield conveyance.save();
     } catch(e) {
-      Error(e);
+      throw Error(e);
     }
 
     this.transitionToRoute('conveyances.show', conveyance);
