@@ -27,6 +27,6 @@ export default Controller.extend({
       throw Error(e);
     }
 
-    this.transitionToRoute('conveyances.show', conveyance);
+    this.transitionToRoute('login');
   }).drop()
 });
