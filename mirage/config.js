@@ -14,6 +14,24 @@ export default function() {
   // this.namespace = '';    // make this `/api`, for example, if your API is namespaced
   this.timing = 1000;      // delay for each request, automatically set to 0 during testing
 
+  function createDefaultTasks(schema) {
+    return [
+      schema.tasks.create({
+        title: 'Buyers identification',
+        description: 'For the purchase we need to confirm your identity. Money laundering etc.',
+        buyerActions: [schema.taskActions.create({ type: 'document-upload' })]
+      }),
+      schema.tasks.create({
+        title: 'Chancel repair liability',
+        description: 'Chancel repair liability should be bought.',
+        solicitorActions: [schema.taskActions.create({ type: 'document-upload' })]
+      }),
+      schema.tasks.create({
+        title: 'Mortgage Approval Document',
+        description: 'Please upload the approval of your mortgage.',
+      }),
+    ];
+  }
   /*
     Shorthand cheatsheet:
 
@@ -78,7 +96,8 @@ export default function() {
     let { data } = JSON.parse(request.requestBody);
     let conveyance = schema.conveyances.create({
       buyerId: data.relationships.buyer.data.id,
-      solicitor: schema.users.find(1)
+      solicitor: schema.users.find(1),
+      tasks: createDefaultTasks(schema)
     });
     return conveyance;
   }, 201);
