@@ -1,0 +1,26 @@
+<div class="flex-grow flex">
+  {{#link-to "index"
+    class="no-underline text-white py-4"
+    activeClass="text-orange"
+  }}
+    Homeward
+  {{/link-to}}
+</div>
+<div class="flex">
+  {{#if session.isAuthenticated}}
+    <a onclick={{action "logout"}}>Log out</a>
+  {{else}}
+    {{#link-to "signup"
+      class="no-underline text-white p-4 hover:bg-purple-darker"
+    }}
+      Sign up
+    {{/link-to}}
+    {{#link-to "login"
+      class="no-underline text-white p-4 hover:bg-purple-darker"
+    }}
+      Login
+    {{/link-to}}
+  {{/if}}
+</div>
+
+{{yield}}
