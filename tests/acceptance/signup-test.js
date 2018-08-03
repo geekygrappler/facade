@@ -12,8 +12,6 @@ module('Acceptance | signup', function(hooks) {
     await visit('/signup');
 
     assert.equal(currentURL(), '/signup');
-
-    assert.dom('[data-test-signup-component]').exists();
   });
 
   /**

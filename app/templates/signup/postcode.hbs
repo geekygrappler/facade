@@ -1,0 +1,40 @@
+<h4 class="m-4">Step 2. of 3</h4>
+<div class="h-4 w-3/4 m-auto border shadow">
+  <div class="bg-green h-full w-2/3"></div>
+  <div class="w-2/3"></div>
+</div>
+<div class="mt-8">
+  {{#if signup.isBuying}}
+    <p>Postcode of the purchase property</p>
+    {{input
+      type="text"
+      class="h-8 leading-loose mt-4 rounded"
+      value=postcode
+    }}
+    <div class="mt-4">
+      <button
+        class="p-4 bg-green shadow w-1/4 hover:bg-green-dark text-white {{if invalidPostcode "cursor-not-allowed opacity-50"}}"
+        onclick={{action 'submit'}}
+      >
+        Final Step
+      </button>
+    </div>
+  {{else if signup.isSelling}}
+    <p>Postcode of the property you are selling</p>
+    {{input
+      type="text"
+      class="h-8 leading-loose mt-4 rounded"
+      value=postcode
+    }}
+    <div class="mt-4">
+      <button
+        class="p-4 bg-green shadow w-1/4 hover:bg-green-dark text-white {{if invalidPostcode "cursor-not-allowed opacity-50"}}"
+        onclick={{action 'submit'}}
+      >
+        Final Step
+      </button>
+    </div>
+  {{else}}
+    buy sell
+  {{/if}}
+</div>
