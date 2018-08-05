@@ -4,37 +4,48 @@
   <div class="w-2/3"></div>
 </div>
 <div class="mt-8">
-  {{#if signup.isBuying}}
-    <p>Postcode of the purchase property</p>
-    {{input
-      type="text"
-      class="h-8 leading-loose mt-4 rounded"
-      value=postcode
-    }}
+  <form onsubmit={{action "submit"}}>
+    {{#if signup.isBuying}}
+      <p>Postcode of the purchase property</p>
+        {{input
+          type="text"
+          class="h-8 leading-loose mt-4 rounded"
+          value=postcode
+        }}
+    {{else if signup.isSelling}}
+      <p>Postcode of the property you are selling</p>
+      {{input
+        type="text"
+        class="h-8 leading-loose mt-4 rounded"
+        value=postcode
+      }}
+    {{else}}
+      <div class="flex">
+        <div class="w-1/2">
+          <p>Postcode of the property you are buying</p>
+          {{input
+            type="text"
+            class="h-8 leading-loose mt-4 rounded"
+            value=buyingPostcode
+          }}
+        </div>
+        <div class="w-1/2">
+          <p>Postcode of the property you are selling</p>
+          {{input
+            type="text"
+            class="h-8 leading-loose mt-4 rounded"
+            value=sellingPostcode
+          }}
+        </div>
+      </div>
+    {{/if}}
     <div class="mt-4">
       <button
-        class="p-4 bg-green shadow w-1/4 hover:bg-green-dark text-white {{if invalidPostcode "cursor-not-allowed opacity-50"}}"
-        onclick={{action 'submit'}}
+        type="submit"
+        class="p-4 bg-green shadow w-1/4 hover:bg-green-dark text-white {{if cannotProceed "cursor-not-allowed opacity-50"}}"
       >
-        Final Step
+        Get Quote
       </button>
     </div>
-  {{else if signup.isSelling}}
-    <p>Postcode of the property you are selling</p>
-    {{input
-      type="text"
-      class="h-8 leading-loose mt-4 rounded"
-      value=postcode
-    }}
-    <div class="mt-4">
-      <button
-        class="p-4 bg-green shadow w-1/4 hover:bg-green-dark text-white {{if invalidPostcode "cursor-not-allowed opacity-50"}}"
-        onclick={{action 'submit'}}
-      >
-        Final Step
-      </button>
-    </div>
-  {{else}}
-    buy sell
-  {{/if}}
+  </form>
 </div>
