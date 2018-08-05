@@ -1,0 +1,28 @@
+<div class="mt-8">
+  <h2>
+    Letter of Appointment
+  </h2>
+  <p class="mt-4">
+    Please read and electronically sign this letter of appointment.
+    This document allows us to represent you during
+    {{#if signup.isBuying}}
+      your purchase.
+    {{else if signup.isSelling}}
+      your sale.
+    {{else}}
+      the process.
+    {{/if}}
+    This is required in order for us to contact the estate agent and
+    {{#if signup.isBuying}}
+      seller's solicitor.
+    {{else if signup.isSelling}}
+      buyer's solicitor.
+    {{else}}
+      the other solicitors.
+    {{/if}}
+  </p>
+
+  <div class="mt-4">
+    <h1>ONLINE SIGNATURE/AGREEMENT</h1>
+  </div>
+</div>
