@@ -3,7 +3,7 @@
   <div class="bg-green h-full w-2/3"></div>
   <div class="w-2/3"></div>
 </div>
-<div class="mt-8">
+<div class="mt-4">
   <form onsubmit={{action "submit"}}>
     {{#if signup.isBuying}}
       <p>Postcode of the purchase property</p>
@@ -20,8 +20,8 @@
         value=postcode
       }}
     {{else}}
-      <div class="flex">
-        <div class="w-1/2">
+      <div class="flex flex-wrap">
+        <div class="mt-4 mx-2 w-1/2 flex-grow flex-basis-200">
           <p>Postcode of the property you are buying</p>
           {{input
             type="text"
@@ -29,7 +29,7 @@
             value=buyingPostcode
           }}
         </div>
-        <div class="w-1/2">
+        <div class="mt-4 mx-2 w-1/2 flex-grow flex-basis-200">
           <p>Postcode of the property you are selling</p>
           {{input
             type="text"
@@ -39,10 +39,10 @@
         </div>
       </div>
     {{/if}}
-    <div class="mt-4">
+    <div class="mt-4 flex justify-center">
       <button
         type="submit"
-        class="p-4 bg-green shadow w-1/4 hover:bg-green-dark text-white {{if cannotProceed "cursor-not-allowed opacity-50"}}"
+        class="p-4 bg-green shadow hover:bg-green-dark text-white {{if cannotProceed "cursor-not-allowed opacity-50"}}"
       >
         Get Quote
       </button>

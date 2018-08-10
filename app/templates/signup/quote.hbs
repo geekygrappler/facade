@@ -3,9 +3,66 @@
   <h2 class="text-orange mt-4">£1,500</h2>
   <small>(inc. VAT)</small>
   <p class="mt-4">This quote includes all fees and charges.</p>
-  {{#link-to "signup.deposit"
-    class="mt-4 p-4 bg-green shadow w-1/4 m-auto no-underline block hover:bg-green-dark text-white"
-  }}
-    Appoint us
-  {{/link-to}}
+  <p class="mt-4">If you'd like to appoint us, then we will need your name and email address in order to create an account</p>
+  <form
+    class="w-3/4 m-auto text-left mt-4 leading-loose"
+    onsubmit={{action "transitionToDeposit"}}
+  >
+    <div class="flex flex-wrap">
+      <div class="flex-auto mx-2">
+        <label for="firstName">First Name</label>
+        {{input
+          type="text"
+          class="block shadow py-2 px-3"
+          placeholder="First Name"
+          id="firstName"
+          value=firstName}}
+      </div>
+      <div class="flex-auto mx-2">
+        <label for="middleNames" class="block">Middle Names</label>
+        {{input
+          type="text"
+          class="block shadow py-2 px-3"
+          placeholder="Middle Names"
+          id="middleNames"
+          value=middleNames}}
+      </div>
+      <div class="flex-auto mx-2">
+        <label for="lastName" class="block">Last Name</label>
+        {{input
+          type="text"
+          class="block shadow py-2 px-3"
+          placeholder="Last Name"
+          id="lastName"
+          value=lastName}}
+      </div>
+    </div>
+    <div class="flex flex-wrap">
+      <div class="flex-auto mx-2">
+        <label for="email" class="block mt-4">Email</label>
+        {{input
+          type="email"
+          class="block shadow py-2 px-3"
+          placeholder="Email"
+          id="email"
+          value=email}}
+      </div>
+      <div class="flex-auto mx-2">
+        <label for="password" class="block mt-4">Password</label>
+        {{input
+          type="password"
+          class="block shadow py-2 px-3"
+          id="password"
+          value=password}}
+      </div>
+    </div>
+    <div class="mt-4 flex justify-center">
+      <button
+        type="submit"
+        class="p-4 bg-green shadow hover:bg-green-dark text-white"
+      >
+        Appoint Us
+      </button>
+    </div>
+  </form>
 </div>
