@@ -7,11 +7,12 @@ export default DS.Model.extend({
   role: DS.attr('string'),
   prefix: DS.attr('string'),
   firstName: DS.attr('string'),
+  middleNames: DS.attr('string'),
   lastName: DS.attr('string'),
   email: DS.attr('string'),
 
   isSolicitor: equal('role', raw('solicitor')),
-  isBuyer: equal('role', raw('buyer')),
+  isClient: equal('role', raw('client')),
 
   formattedName: computed('prefix', 'lastName', function() {
     return `${this.prefix} ${this.lastName}`;

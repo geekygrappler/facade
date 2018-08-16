@@ -10,14 +10,14 @@
         {{input
           type="text"
           class="h-8 leading-loose mt-4 rounded"
-          value=postcode
+          value=buyingPostcode
         }}
     {{else if signup.isSelling}}
       <p>Postcode of the property you are selling</p>
       {{input
         type="text"
         class="h-8 leading-loose mt-4 rounded"
-        value=postcode
+        value=sellingPostcode
       }}
     {{else}}
       <div class="flex flex-wrap">

@@ -95,8 +95,7 @@ export default function() {
   this.post('/conveyances', (schema, request) => {
     let { data } = JSON.parse(request.requestBody);
     let conveyance = schema.conveyances.create({
-      buyerId: data.relationships.buyer.data.id,
-      solicitor: schema.users.find(1),
+      customerId: data.relationships.customer.data.id,
       tasks: createDefaultTasks(schema)
     });
     return conveyance;
@@ -112,4 +111,6 @@ export default function() {
   });
 
   this.patch('/task-actions/:id');
+
+  this.post('/customers');
 }

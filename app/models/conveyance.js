@@ -15,9 +15,9 @@ export default DS.Model.extend({
   tasks: DS.hasMany('task'),
 
   /**
-   * The user who will be purchasing the property.
+   * The customer
    */
-  buyer: DS.belongsTo('user'),
+  customer: DS.belongsTo('customer'),
 
   /**
    * The solicitor who will handle the case.
@@ -25,11 +25,14 @@ export default DS.Model.extend({
   solicitor: DS.belongsTo('user'),
 
   /**
-   * This is vaguely the address of the property being bought.
-   * Not sure at this stage if we'll need the current address of the buyer as well as
-   * ther property address
+   * The address of the property being bought, indicates that we need tasks for a purchase
    */
-  address: DS.belongsTo('address'),
+  purchaseAddress: DS.belongsTo('address'),
+
+  /**
+   * The address of the property being sold, indicates that we need tasks for a sale
+   */
+  saleAddress: DS.belongsTo('address'),
 
   /**
    * Number of complete tasks
