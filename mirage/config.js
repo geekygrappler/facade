@@ -1,4 +1,6 @@
 import { Response } from 'ember-cli-mirage';
+import { parse } from 'qs';
+import { encode } from 'jwt-simple';
 
 export default function() {
 
@@ -49,28 +51,18 @@ export default function() {
   this.get('/users/:id');
   this.post('/users');
 
-  this.post('/token', (schema, request) => {
-    if (request.requestBody.includes('solicitor')) {
-      // user 1 is a solicitor
+  this.post('/token', ({ users }, request) => {
+    let { username, password } = parse(request.requestBody);
+    let user = users.findBy({ email: username });
+    if (user.password === password) {
       return new Response(200, {}, {
-        access_token: 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiIxIn0.3IVGWbNupXA5kLyvBHoq7EBzkaKdQRsflg5oc_OXGxQ'
+        access_token: encode({ userId: user.id }, 'foo')
+      });
+    } else {
+      return new Response(400, {}, {
+        error: 'Wrong email or password'
       });
     }
-    if (request.requestBody.includes('buyer')) {
-      // user 2 is a buyer
-      return new Response(200, {}, {
-        access_token: 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiIyIn0.Hfisvn6GzGJeWNS_Z72SDV-jPjL18MX18cO0EA4nlcQ'
-      });
-    }
-    if (request.requestBody.includes('new')) {
-      // user 5 is first new signup - what a mess
-      return new Response(200, {}, {
-        access_token: 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiI1In0.pf_3Ff7QNFO7QfY3r409W_Odf2_sMASguQ6zpNXz40Y'
-      });
-    }
-    return new Response(400, {}, {
-      'error': 'Wrong email or password try solicitor or buyer'
-    });
   });
 
   this.get('/conveyances', ({ conveyances, users }, request) => {

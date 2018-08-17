@@ -6,6 +6,7 @@ export default function(server) {
   */
 
   // id: 1
+  server.create('user', { email: 'brownie3003@gmail.com', password: 'password' });
   let solicitor = server.create('user', { role: 'solicitor' });
   // id: 2
   let buyer1 = server.create('user', { role: 'buyer' });
