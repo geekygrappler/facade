@@ -8,21 +8,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
   model() {
     return this.get('store').query('conveyance', {
       filter: { userId: this.get('currentUser.id') } ,
-      include: 'address,tasks,solicitor,buyer,tasks.buyer-actions,tasks.solicitor-actions'
-    });
-  },
-
-  /**
-   * After we've collected the user's conveyances, if we have a buyer
-   * we will transition to the (TODO active/current/first) case.
-   * @param [Conveyances] model
-   */
-  afterModel(model) {
-    return this.currentUser.user.then((user) => {
-      let latestConveyance = model.get('firstObject');
-      if (user.role === 'buyer') {
-        this.transitionTo('conveyances.show', latestConveyance);
-      }
+      include: 'purchase-address,sale-address,tasks,tasks.buyer-actions,tasks.solicitor-actions'
     });
   },
 
