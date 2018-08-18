@@ -1,13 +1,6 @@
 <h1>Dashboard</h1>
-
-{{#if currentUser.user.isSolicitor}}
-  {{solicitor-dashboard
-    conveyances=conveyances
-  }}
-{{else if currentUser.user.isBuyer}}
-  {{buyer-dashboard
-    conveyances=conveyances
-  }}
-{{/if}}
+{{#each conveyances as |c|}}
+  {{conveyance-summary conveyance=c}}
+{{/each}}
 
 {{outlet}}
