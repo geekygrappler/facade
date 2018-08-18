@@ -1,8 +1,8 @@
 import { Model, belongsTo, hasMany } from 'ember-cli-mirage';
 
 export default Model.extend({
-  buyer: belongsTo('user'),
-  solicitor: belongsTo('user'),
-  address: belongsTo(),
+  user: belongsTo('user'),
+  purchaseAddress: belongsTo('address'),
+  saleAddress: belongsTo('address'),
   tasks: hasMany()
 });

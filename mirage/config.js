@@ -67,16 +67,9 @@ export default function() {
 
   this.get('/conveyances', ({ conveyances, users }, request) => {
     let userId = request.queryParams['filter[userId]'];
-    let user = users.all().models.find(user => user.id === userId);
-    if (user.role === 'solicitor') {
-      return conveyances.all().filter((conveyance) => {
-        return  conveyance.solicitor.id === userId;
-      });
-    }
-    if (user.role === 'buyer') {
-      return conveyances.all().filter((conveyance) => {
-        return  conveyance.buyer.id === userId;
-      });
+    let user = users.find(userId);
+    if (user) {
+      return conveyances.where({ userId: user.id });
     }
     return [];
   });

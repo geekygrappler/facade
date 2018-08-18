@@ -6,32 +6,11 @@ export default function(server) {
   */
 
   // id: 1
-  server.create('user', { email: 'brownie3003@gmail.com', password: 'password' });
-  let solicitor = server.create('user', { role: 'solicitor' });
-  // id: 2
-  let buyer1 = server.create('user', { role: 'buyer' });
-  let buyer2 = server.create('user', { role: 'buyer' });
-  let buyer3 = server.create('user', { role: 'buyer' });
-
-  server.createList('conveyance', 3, {
-    address() { return server.create('address'); },
-    tasks() {
-      return [
-        server.create('task', 'buyersIdentification'),
-        server.create('task', 'chancel'),
-        server.create('task', 'mortgageApproval'),
-      ];
-    },
-    buyer(i) {
-      switch(i) {
-        case 0:
-          return buyer1;
-        case 1:
-          return buyer2;
-        case 2:
-          return buyer3;
-      }
-    },
-    solicitor
+  let andy = server.create('user', { email: 'brownie3003@gmail.com', password: 'password' });
+  server.create('conveyance', {
+    user: andy,
+    purchaseAddress: server.create('address'),
+    saleAddress: server.create('address'),
+    tasks: [server.create('task')]
   });
 }
