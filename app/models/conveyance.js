@@ -1,4 +1,6 @@
 import DS from 'ember-data';
+import { isEmpty } from '@ember/utils';
+import { and, not } from 'ember-awesome-macros';
 import { filterBy, length } from 'ember-awesome-macros/array';
 import raw from 'ember-macro-helpers/raw';
 
@@ -17,12 +19,7 @@ export default DS.Model.extend({
   /**
    * The customer
    */
-  customer: DS.belongsTo('customer'),
-
-  /**
-   * The solicitor who will handle the case.
-   */
-  solicitor: DS.belongsTo('user'),
+  user: DS.belongsTo('user'),
 
   /**
    * The address of the property being bought, indicates that we need tasks for a purchase
@@ -37,5 +34,20 @@ export default DS.Model.extend({
   /**
    * Number of complete tasks
    */
-  numberOfCompleteTasks: length(filterBy('tasks', raw('complete'), true))
+  numberOfCompleteTasks: length(filterBy('tasks', raw('complete'), true)),
+
+  /**
+   * Is a purchase
+   */
+  isPurchase: and('purchaseAddress', not('saleAddress')),
+
+  /**
+   * Is sale
+   */
+  isSale: and(not('purchaseAddress'),'saleAddress'),
+
+  /**
+   * Is a chain
+   */
+  isChain: and('purchaseAddress', 'saleAddress')
 });
