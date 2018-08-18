@@ -1,5 +1,4 @@
 import DS from 'ember-data';
-import { isEmpty } from '@ember/utils';
 import { and, not } from 'ember-awesome-macros';
 import { filterBy, length } from 'ember-awesome-macros/array';
 import raw from 'ember-macro-helpers/raw';
