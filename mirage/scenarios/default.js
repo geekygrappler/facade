@@ -11,6 +11,6 @@ export default function(server) {
     user: andy,
     purchaseAddress: server.create('address'),
     saleAddress: server.create('address'),
-    tasks: [server.create('task')]
+    tasks: server.createList('task', 8)
   });
 }
