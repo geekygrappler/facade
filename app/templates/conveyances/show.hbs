@@ -1,24 +1,24 @@
-<div class="show-container">
-  <div class="side-bar">
-    <h3>Address</h3>
-    {{formatted-address address=conveyance.address}}
-
-    {{#if currentUser.user.isBuyer}}
-      <strong data-test-solicitor-name>Solicitor: {{conveyance.solicitor.formattedName}}</strong>
+<div class="flex flex-auto">
+  <div class="bg-white shadow-right pl-8 pr-4 py-4 flex-auto flex-basis-200">
+    {{#if conveyance.purchaseAddress}}
+      <h3>Purchase Property</h3>
+      {{formatted-address address=conveyance.purchaseAddress}}
     {{/if}}
-    {{#if currentUser.user.isSolicitor}}
-      <strong>Buyer: {{conveyance.buyer.formattedName}}</strong>
+    {{#if conveyance.saleAddress}}
+    <h3 class="mt-2">Sale Property</h3>
+    {{formatted-address address=conveyance.saleAddress}}
     {{/if}}
-
-    <h4>Status: {{conveyance.numberOfCompleteTasks}}/{{conveyance.tasks.length}} tasks complete</h4>
+    <h4 class="mt-2">Status: {{conveyance.numberOfCompleteTasks}}/{{conveyance.tasks.length}} tasks complete</h4>
   </div>
-  <div class="main-view">
+  <div class="p-4 pr-8">
     <h2>Tasks</h2>
     {{#each conveyance.tasks as |task|}}
-      {{conveyance-task
-        class="conveyance-task"
-        task=task
-      }}
+      <div class="bg-white my-8 p-4 shadow">
+        {{conveyance-task
+          class="conveyance-task"
+          task=task
+        }}
+      </div>
     {{/each}}
   </div>
 </div>
