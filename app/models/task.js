@@ -14,6 +14,21 @@ export default DS.Model.extend({
   complete: DS.attr('boolean', { defaultValue: false }),
 
   /**
+   * If the task is related to a purchase
+   */
+  purchase: DS.attr('boolean'),
+
+  /**
+   * If the task is related to a sale
+   */
+  sale: DS.attr('boolean'),
+
+  /**
+   * If the task is related to the client more generally e.g. address history
+   */
+  general: DS.attr('boolean'),
+
+  /**
    * Helpful information for the client to understand this task
    */
   description: DS.attr('string'),
