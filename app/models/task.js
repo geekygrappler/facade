@@ -14,7 +14,7 @@ export default DS.Model.extend({
   complete: DS.attr('boolean', { defaultValue: false }),
 
   /**
-   * Helpful information for the buyer to understand this task
+   * Helpful information for the client to understand this task
    */
   description: DS.attr('string'),
 
@@ -24,9 +24,9 @@ export default DS.Model.extend({
   notes: DS.attr('string'),
 
   /**
-   * Actions for a buyer
+   * Actions for a client
    */
-  buyerActions: DS.hasMany('task-action'),
+  clientActions: DS.hasMany('task-action'),
 
   /**
    * Actions for a solicitor
