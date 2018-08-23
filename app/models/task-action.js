@@ -4,14 +4,14 @@ import raw from 'ember-macro-helpers/raw';
 
 export default DS.Model.extend({
   /**
-   * The available types as the moment 'document-upload', 'data-entry'
+   * The available types as the moment 'document-upload', 'form', 'approval'
    */
   type: DS.attr('string'),
 
   /**
    * User friendly description of the task
    * e.g. Identity document (document-upload)
-   * e.g. National Insurance number (data-entry)
+   * e.g. National Insurance number (form)
    */
   description: DS.attr('string'),
 

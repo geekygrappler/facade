@@ -19,12 +19,12 @@ export default Factory.extend({
     description: 'Chancel repair liability should be bought.',
     purchase: true,
     afterCreate(task, server) {
-      task.solicitorActions = server.createList('task-action', 1, { type: 'document-upload' });
+      task.clientAction = server.createList('task-action', 1, { type: 'approval' });
     }
   }),
   propertyInfo: trait({
     title: 'Property Information Form',
-    description: 'General information about the property you\'re selling',
+    description: 'General information about the property you are selling',
     sale: true,
     afterCreate(task, server) {
       task.clientAction = server.createList('task-action', 1, { type: 'form' });
@@ -32,7 +32,7 @@ export default Factory.extend({
   }),
   energyCertificate: trait({
     title: 'Energy Efficiency Certificate',
-    description: 'Every sale requires an energy certificate.',
+    description: 'Every sale requires an EEC.',
     sale: true,
     afterCreate(task, server) {
       task.solicitorActions = server.createList('task-action', 1, { type: 'document-upload' });
@@ -46,4 +46,20 @@ export default Factory.extend({
       task.clientAction = server.createList('task-action', 1, { type: 'document-upload' });
     }
   }),
+  purchaseAgents: trait({
+    title: 'Purchase property estate agent',
+    description: 'We need the details of the estate agent in order to contact the sellers solicitors',
+    purchase: true,
+    afterCreate(task, server) {
+      task.clientAction = server.createList('task-action', 1, { type: 'form' });
+    }
+  }),
+  saleAgents: trait({
+    title: 'Your sale estate agent',
+    description: 'We need the details of your estate agent in order to contact the buyers solicitors',
+    sale: true,
+    afterCreate(task, server) {
+      task.clientAction = server.createList('task-action', 1, { type: 'form' });
+    }
+  })
 });
