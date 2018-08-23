@@ -16,6 +16,13 @@ export default DS.Model.extend({
   description: DS.attr('string'),
 
   /**
+   * Task-actions have an order if a task has more than one of them.
+   */
+  order: DS.attr('number'),
+
+  complete: DS.attr('boolean', { defaultValue: false }),
+
+  /**
    * Documents for a 'document-upload' task
    */
   documents: DS.hasMany('document'),
