@@ -1,3 +1,6 @@
+import { defaultSaleTasks, defaultPurchaseTasks, defaultGeneralTasks } from '../utils/default-tasks';
+
+
 export default function(server) {
 
   /*
@@ -11,6 +14,6 @@ export default function(server) {
     user: andy,
     purchaseAddress: server.create('address'),
     saleAddress: server.create('address'),
-    tasks: server.createList('task', 8)
+    tasks: defaultSaleTasks(server).concat(defaultPurchaseTasks(server), defaultGeneralTasks(server))
   });
 }
