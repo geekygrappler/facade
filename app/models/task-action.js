@@ -27,6 +27,12 @@ export default DS.Model.extend({
    */
   documents: DS.hasMany('document'),
 
+  /**
+   * Approval for 'approval' task, undefined is important it means no decision has been taken.
+   */
+  approval: DS.attr('bool'),
+
   isDocumentUpload: equal('type', raw('document-upload')),
-  isDataEntry: equal('type', raw('data-entry'))
+  isDataEntry: equal('type', raw('data-entry')),
+  isApproval: equal('type', raw('approval'))
 });
