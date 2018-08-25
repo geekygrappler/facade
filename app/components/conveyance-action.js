@@ -1,17 +1,9 @@
 import Component from '@ember/component';
-import { reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
-import { equal } from 'ember-awesome-macros';
 
 export default Component.extend({
-  currentUser: service(),
   store: service(),
-
-  isBuyer: reads('currentUser.user.isBuyer'),
-  isSolicitor: reads('currentUser.user.isSolicitor'),
-
-  isOwner: equal('currentUser.user.role', 'owner'),
 
   multipleDocumentUpload: task(function * (queue) {
     yield queue.files.reduce(file => this.uploadDocument(file));

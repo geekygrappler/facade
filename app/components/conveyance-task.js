@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
-import { conditional, or } from 'ember-awesome-macros';
+import { conditional, or, and, not } from 'ember-awesome-macros';
 import raw from 'ember-macro-helpers/raw';
 import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
@@ -11,13 +11,24 @@ export default Component.extend({
   currentUser: service(),
 
   isSolicitor: reads('currentUser.user.isSolicitor'),
-  isBuyer: reads('currentUser.user.isBuyer'),
+  isClient: reads('currentUser.user.isBuyer'),
 
   editingNotes: false,
 
   isSaveRunning: or('toggleComplete.isRunning', 'saveNotes.isRunning'),
 
   status: conditional('task.complete', raw('complete'), raw('outstanding')),
+
+  clientAndClientAction: and('currentUser.user.isClient', 'task.currentActionBelongsToClient'),
+
+  homewardAndHomewardAction: and('currentUser.user.isSolicitor', ('task.currentActionBelongsToHomeward')),
+
+  isOwner: or('homewardAndHomewardAction', 'clientAndClientAction'),
+
+  init() {
+    this._super(...arguments);
+    console.log('hi');
+  },
 
   notesAreUnedited: computed('task.hasDirtyAttributes', function() {
     let { task } = this;

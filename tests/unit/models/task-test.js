@@ -27,4 +27,10 @@ module('Unit | Model | task', function(hooks) {
       assert.equal(task.get('currentAction'), solicitorAction);
     });
   });
+
+  test('currentClientAction is true when the current action is a client action', function(assert) {
+    let clientAction = make('task-action');
+    let task = make('task', { clientActions: [clientAction] });
+    assert.ok(task.currentClientAction);
+  });
 });

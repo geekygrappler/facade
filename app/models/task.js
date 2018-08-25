@@ -1,6 +1,7 @@
 import DS from 'ember-data';
 import { computed } from '@ember/object';
 import { union, filterBy } from '@ember/object/computed';
+import { includes } from 'ember-awesome-macros/array';
 
 /**
  * A task that is part of a conveyancing case
@@ -65,4 +66,8 @@ export default DS.Model.extend({
     let actions = this.get('incompleteActions');
     return actions[0];
   }),
+
+  currentActionBelongsToClient: includes('clientActions', 'currentAction'),
+
+  currentActionBelongsToHomeward: includes('solicitorActions', 'currentAction')
 });
