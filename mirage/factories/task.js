@@ -11,7 +11,7 @@ export default Factory.extend({
     description: 'We need to confirm your identity. Money laundering etc.',
     general: true,
     afterCreate(task, server) {
-      task.clientAction = server.createList('task-action', 1, { type: 'document-upload' });
+      task.clientActions = server.createList('task-action', 1, { type: 'document-upload' });
     }
   }),
   chancel: trait({
@@ -19,7 +19,8 @@ export default Factory.extend({
     description: 'Chancel repair liability should be bought.',
     purchase: true,
     afterCreate(task, server) {
-      task.clientAction = server.createList('task-action', 1, { type: 'approval' });
+      task.clientActions = server.createList('task-action', 1, { type: 'approval', order: 1, description: 'We recommend having searches to find out if your new property sits on Chancellory land. The cost of searches is £135.' });
+      task.solicitorActions = server.createList('task-action', 1, { type: 'document-upload', order: 2 });
     }
   }),
   propertyInfo: trait({
@@ -27,7 +28,7 @@ export default Factory.extend({
     description: 'General information about the property you are selling',
     sale: true,
     afterCreate(task, server) {
-      task.clientAction = server.createList('task-action', 1, { type: 'form' });
+      task.clientActions = server.createList('task-action', 1, { type: 'form' });
     }
   }),
   energyCertificate: trait({
@@ -35,7 +36,7 @@ export default Factory.extend({
     description: 'Every sale requires an EEC.',
     sale: true,
     afterCreate(task, server) {
-      task.solicitorActions = server.createList('task-action', 1, { type: 'document-upload' });
+      task.clientActions = server.createList('task-action', 1, { type: 'document-upload' });
     }
   }),
   mortgageApproval: trait({
@@ -43,7 +44,7 @@ export default Factory.extend({
     description: 'Please upload the approval of your mortgage.',
     purchase: true,
     afterCreate(task, server) {
-      task.clientAction = server.createList('task-action', 1, { type: 'document-upload' });
+      task.clientActions = server.createList('task-action', 1, { type: 'document-upload' });
     }
   }),
   purchaseAgents: trait({
@@ -51,7 +52,7 @@ export default Factory.extend({
     description: 'We need the details of the estate agent in order to contact the sellers solicitors',
     purchase: true,
     afterCreate(task, server) {
-      task.clientAction = server.createList('task-action', 1, { type: 'form' });
+      task.clientActions = server.createList('task-action', 1, { type: 'form' });
     }
   }),
   saleAgents: trait({
@@ -59,7 +60,7 @@ export default Factory.extend({
     description: 'We need the details of your estate agent in order to contact the buyers solicitors',
     sale: true,
     afterCreate(task, server) {
-      task.clientAction = server.createList('task-action', 1, { type: 'form' });
+      task.clientActions = server.createList('task-action', 1, { type: 'form' });
     }
   })
 });
