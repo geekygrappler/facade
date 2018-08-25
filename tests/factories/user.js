@@ -4,12 +4,7 @@ FactoryGuy.define('user', {
   default: {
     prefix: 'Mr.',
     firstName: 'Tony',
-    lastName: 'Stark'
-  },
-  solicitor: {
-    role: 'solicitor'
-  },
-  buyer: {
-    role: 'buyer'
+    lastName: 'Stark',
+    role: 'client'
   }
 });
