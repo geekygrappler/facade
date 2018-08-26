@@ -1,6 +1,6 @@
-<h4>Upload Documents</h4>
+<h4 class="mb-2">Document Upload</h4>
 {{#file-dropzone
-  class="dropzone"
+  class="h-32 bg-grey-lighter flex items-center justify-center mb-4"
   data-test-document-upload=true
   ondrop=(perform onDrop)
   name="documents" as |dropzone queue|
@@ -14,9 +14,9 @@
   {{else if queue.files.length}}
     Uploading {{queue.files.length}} files. ({{queue.progress}}%)
   {{else}}
-    <p>
+    <div class="text-center">
       {{#if dropzone.supported}}
-        Drag and drop files onto this area to upload them or
+        <p class="mb-2">Drag and drop files onto this area to upload them.</p>
       {{/if}}
       {{#file-upload name="documents"
         for="documents"
@@ -24,8 +24,8 @@
         multiple=true
         onfileadd=(perform onFileAdd)
       }}
-        <a tabindex=0>Upload Documents</a>
+        <a class="p-4 bg-blue text-white block m-auto">Click to upload from file system</a>
       {{/file-upload}}
-    </p>
+    </div>
   {{/if}}
 {{/file-dropzone}}
