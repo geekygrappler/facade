@@ -25,11 +25,6 @@ export default Component.extend({
 
   isOwner: or('homewardAndHomewardAction', 'clientAndClientAction'),
 
-  init() {
-    this._super(...arguments);
-    console.log('hi');
-  },
-
   notesAreUnedited: computed('task.hasDirtyAttributes', function() {
     let { task } = this;
     return !task.hasDirtyAttributes;
