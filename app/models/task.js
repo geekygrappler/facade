@@ -67,6 +67,10 @@ export default DS.Model.extend({
     return actions[0];
   }),
 
+  awaitingApproval: computed('clientActions.@each.awaitingApproval', function() {
+    return this.get('clientActions').filter(a => a.get('awaitingApproval')).length > 0;
+  }),
+
   currentActionBelongsToClient: includes('clientActions', 'currentAction'),
 
   currentActionBelongsToHomeward: includes('solicitorActions', 'currentAction')

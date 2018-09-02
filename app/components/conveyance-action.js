@@ -15,13 +15,13 @@ export default Component.extend({
       name: file.name
     });
     action.documents.pushObject(document);
+    action.set('approved', false);
 
     try {
-      file.readAsDataURL().then(function (url) {
-        if (document.url == null) {
-          document.set('url', url);
-        }
-      });
+      let dataUrl = yield file.readAsDataURL();
+      if (document.url == null) {
+        document.set('url', dataUrl);
+      }
 
       let response = yield file.upload('/s3/some/bucket');
       document.set('url', response.headers.Location);

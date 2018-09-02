@@ -11,7 +11,7 @@ export default Factory.extend({
     description: 'We need to confirm your identity. Money laundering etc.',
     general: true,
     afterCreate(task, server) {
-      task.clientActions = server.createList('task-action', 1, { type: 'document-upload' });
+      task.clientActions = server.createList('task-action', 1, { type: 'document-upload', requiresApproval: true });
     }
   }),
   chancel: trait({
@@ -36,7 +36,7 @@ export default Factory.extend({
     description: 'Every sale requires an EEC.',
     sale: true,
     afterCreate(task, server) {
-      task.clientActions = server.createList('task-action', 1, { type: 'document-upload' });
+      task.clientActions = server.createList('task-action', 1, { type: 'document-upload', requiresApproval: true });
     }
   }),
   mortgageApproval: trait({
@@ -44,7 +44,7 @@ export default Factory.extend({
     description: 'Please upload the approval of your mortgage.',
     purchase: true,
     afterCreate(task, server) {
-      task.clientActions = server.createList('task-action', 1, { type: 'document-upload' });
+      task.clientActions = server.createList('task-action', 1, { type: 'document-upload', requiresApproval: true });
     }
   }),
   purchaseAgents: trait({

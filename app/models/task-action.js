@@ -1,6 +1,7 @@
 import DS from 'ember-data';
 import { equal } from 'ember-awesome-macros';
 import raw from 'ember-macro-helpers/raw';
+import { computed } from '@ember/object';
 
 export default DS.Model.extend({
   /**
@@ -10,7 +11,7 @@ export default DS.Model.extend({
 
   /**
    * User friendly description of the task
-   * e.g. Identity document (document-upload)
+   * e.g. Identity document (document-uload)
    * e.g. National Insurance number (form)
    */
   description: DS.attr('string'),
@@ -28,9 +29,24 @@ export default DS.Model.extend({
   documents: DS.hasMany('document'),
 
   /**
-   * Approval for 'approval' task, undefined is important it means no decision has been taken.
+   * In general uploaded documents by clients need approval. It's not easy to determine
+   * if the upload document task-action belongs to a client as it lives in a tasks `clientActions`
+   * array.
+   *
+   * We need to manually set whether it requires approval when the task is created.
    */
-  approval: DS.attr('bool'),
+  requiresApproval: DS.attr('boolean', { defaultValue: false }),
+
+  /**
+   * This needs to manually reset every time a document is added to the array.
+   */
+  approved: DS.attr('boolean', { defaultValue: false }),
+
+  awaitingApproval: computed('documents.[]', 'requiresApproval', 'approved', function() {
+    let { documents, requiresApproval, approved } = this;
+
+    return requiresApproval && documents.length > 0 && !approved;
+  }),
 
   isDocumentUpload: equal('type', raw('document-upload')),
   isDataEntry: equal('type', raw('data-entry')),

@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
-import { conditional, or, and, not } from 'ember-awesome-macros';
+import { conditional, or, and } from 'ember-awesome-macros';
 import raw from 'ember-macro-helpers/raw';
 import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
