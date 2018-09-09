@@ -25,4 +25,26 @@ module('Unit | Model | task action', function(hooks) {
       assert.notOk(action.requiresApproval, 'Solicitor upload actions do not require approval');
     });
   });
+
+  module('awaitingApproval', function() {
+    test('action with no uploaded documents doesn\'t require approval', function(assert) {
+      let client = make('user', { role: 'client' });
+      let action = make('task-action', {  owner: client, type: 'document-upload' });
+      assert.notOk(action.awaitingApproval);
+    });
+
+    test('action with uploaded documents does require approval if it has not been approved', function(assert) {
+      let document = make('document');
+      let client = make('user', { role: 'client' });
+      let action = make('task-action', {  owner: client, type: 'document-upload', documents: [document] });
+      assert.ok(action.awaitingApproval);
+    });
+
+    test('approved action with uploaded documents does require approval', function(assert) {
+      let document = make('document');
+      let client = make('user', { role: 'client' });
+      let action = make('task-action', {  owner: client, type: 'document-upload', documents: [document], approved:  true });
+      assert.notOk(action.awaitingApproval);
+    });
+  });
 });
