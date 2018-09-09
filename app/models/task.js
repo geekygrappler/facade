@@ -1,7 +1,7 @@
 import DS from 'ember-data';
 import { computed } from '@ember/object';
-import { filterBy } from '@ember/object/computed';
-import { includes, filter } from 'ember-awesome-macros/array';
+import { filterBy, reads } from '@ember/object/computed';
+import { filter } from 'ember-awesome-macros/array';
 
 /**
  * A task that is part of a conveyancing case
@@ -74,7 +74,7 @@ export default DS.Model.extend({
     return this.get('clientActions').filter(a => a.get('awaitingApproval')).length > 0;
   }),
 
-  currentActionBelongsToClient: includes('clientActions', 'currentAction'),
+  currentActionBelongsToClient: reads('currentAction.owner.isClient'),
 
-  currentActionBelongsToHomeward: includes('solicitorActions', 'currentAction')
+  currentActionBelongsToHomeward: reads('currentAction.owner.isSolicitor')
 });
