@@ -1,6 +1,6 @@
 import DS from 'ember-data';
 import { computed } from '@ember/object';
-import { union, filterBy } from '@ember/object/computed';
+import { filterBy } from '@ember/object/computed';
 import { includes, filter } from 'ember-awesome-macros/array';
 
 /**
