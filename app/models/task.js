@@ -1,7 +1,7 @@
 import DS from 'ember-data';
 import { computed } from '@ember/object';
 import { union, filterBy } from '@ember/object/computed';
-import { includes } from 'ember-awesome-macros/array';
+import { includes, filter } from 'ember-awesome-macros/array';
 
 /**
  * A task that is part of a conveyancing case
@@ -42,19 +42,22 @@ export default DS.Model.extend({
   notes: DS.attr('string'),
 
   /**
+   * Actions
+   */
+  actions: DS.hasMany('task-action'),
+
+  /**
    * Actions for a client
    */
-  clientActions: DS.hasMany('task-action'),
+  clientActions: filter('actions', action => action.owner.get('isClient')),
 
   /**
    * Actions for a solicitor
    */
-  solicitorActions: DS.hasMany('task-action'),
+  solicitorActions: filter('actions', action => action.owner.get('isSolicitor')),
 
-  allActions: union('clientActions', 'solicitorActions'),
-
-  orderedActions: computed('allActions', function() {
-    return this.get('allActions').sortBy('order');
+  orderedActions: computed('actions', function() {
+    return this.get('actions').sortBy('order');
   }),
 
   incompleteActions: filterBy('orderedActions', 'complete', false),
