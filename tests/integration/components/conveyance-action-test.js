@@ -9,11 +9,7 @@ module('Integration | Component | conveyance-action', function(hooks) {
   setupFactoryGuy(hooks);
 
   module('document uploads', function() {
-    module('for the action owner', function(hooks) {
-      hooks.beforeEach(function() {
-        this.owner.lookup('service:currentUser').set('user', make('buyer'));
-        this.set('actionOwner', 'buyer');
-      });
+    module('for the action owner', function() {
       test('if the task has documents they are shown and the action is not', async function(assert) {
         let document = make('document');
         let action = make('task-action', { type: 'document-upload', documents: [document] });
@@ -21,21 +17,21 @@ module('Integration | Component | conveyance-action', function(hooks) {
         await render(hbs`
           {{conveyance-action
             action=action
-            owner=actionOwner
+            isOwner=true
           }}
         `);
 
         assert.dom('[data-test-document-download]').exists({ count: 1 });
         assert.dom('[data-test-document-upload-component]').doesNotExist();
+        assert.dom('[data-test-upload-more-documents]').exists();
       });
       test('if the task doesn\'t have documents the upload section is shown', async function(assert) {
         let action = make('task-action', { type: 'document-upload' });
         this.set('action', action);
-        this.owner.lookup('service:currentUser').set('user', make('buyer'));
         await render(hbs`
           {{conveyance-action
             action=action
-            owner=actionOwner
+            isOwner=true
           }}
         `);
 
@@ -43,23 +39,19 @@ module('Integration | Component | conveyance-action', function(hooks) {
         assert.dom('[data-test-document-download]').doesNotExist();
       });
 
-      module('for the non-owner', function(hooks) {
-        hooks.beforeEach(function() {
-          this.owner.lookup('service:currentUser').set('user', make('solicitor'));
-          this.set('actionOwner', 'buyer');
-        });
+      module('for the non-owner', function() {
         test('message about incomplete owner actions are shown', async function(assert) {
           let action = make('task-action', { type: 'document-upload' });
           this.set('action', action);
           await render(hbs`
             {{conveyance-action
               action=action
-              owner=actionOwner
+              isOwner=false
             }}
           `);
 
           assert.dom('[data-test-non-owner-message]').exists({ count: 1 });
-          assert.dom('[data-test-non-owner-message]').containsText('Awaiting buyer to upload documents');
+          assert.dom('[data-test-non-owner-message]').containsText('Awaiting document upload');
         });
       });
     });

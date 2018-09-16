@@ -2,10 +2,16 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
+import { or, and, eq } from 'ember-awesome-macros';
 
 export default Component.extend({
   store: service(),
   'data-test-conveyance-action-component': true,
+
+  uploadMoreDocuments: false,
+  isOwner: false,
+
+  showDocumentUploader: or('uploadMoreDocuments', and(eq('action.documents.length', 0), 'isOwner')),
 
   fileQueueName: computed(function() {
     return `action-${this.action.id}-upload`;
@@ -41,4 +47,10 @@ export default Component.extend({
       action.rollback();
     }
   }).maxConcurrency(3).enqueue(),
+
+  actions: {
+    toggleUploadMoreDocuments() {
+      this.toggleProperty('uploadMoreDocuments');
+    }
+  }
 });

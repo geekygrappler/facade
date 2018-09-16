@@ -1,12 +1,33 @@
 {{#if action.isDocumentUpload}}
-  {{#if isOwner}}
+  {{#if action.documents}}
+    <ul>
+      {{#each action.documents as |doc|}}
+        <li>
+          {{doc.name}}
+          <button data-test-document-download>Download</button>
+        </li>
+      {{/each}}
+    </ul>
+    {{#if (not showDocumentUploader)}}
+      <button
+        onclick={{action 'toggleUploadMoreDocuments'}}
+        data-test-upload-more-documents
+      >
+        Upload more documents
+      </button>
+    {{/if}}
+  {{else}}
+    {{#if (not isOwner)}}
+      <p data-test-non-owner-message>Awaiting document upload</p>
+    {{/if}}
+  {{/if}}
+
+  {{#if showDocumentUploader}}
     {{document-upload
       onFileAdd=uploadDocument
       onDrop=multipleDocumentUpload
       fileQueueName=fileQueueName
     }}
-  {{else}}
-    <p data-test-non-owner-message>Awaiting document upload</p>
   {{/if}}
 {{/if}}
 
