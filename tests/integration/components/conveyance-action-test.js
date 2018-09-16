@@ -26,7 +26,7 @@ module('Integration | Component | conveyance-action', function(hooks) {
         `);
 
         assert.dom('[data-test-document-download]').exists({ count: 1 });
-        assert.dom('[data-test-buyer-action]').doesNotExist();
+        assert.dom('[data-test-document-upload-component]').doesNotExist();
       });
       test('if the task doesn\'t have documents the upload section is shown', async function(assert) {
         let action = make('task-action', { type: 'document-upload' });
@@ -39,7 +39,7 @@ module('Integration | Component | conveyance-action', function(hooks) {
           }}
         `);
 
-        assert.dom('[data-test-buyer-action]').exists({ count: 1 });
+        assert.dom('[data-test-document-upload-component]').exists({ count: 1 });
         assert.dom('[data-test-document-download]').doesNotExist();
       });
 

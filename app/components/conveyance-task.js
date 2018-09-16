@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
 import { conditional, or, and } from 'ember-awesome-macros';
+import { resolve } from 'ember-awesome-macros/promise';
 import raw from 'ember-macro-helpers/raw';
 import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
@@ -11,7 +12,7 @@ export default Component.extend({
   currentUser: service(),
 
   isSolicitor: reads('currentUser.user.isSolicitor'),
-  isClient: reads('currentUser.user.isBuyer'),
+  isClient: reads('currentUser.user.isClient'),
 
   editingNotes: false,
 
@@ -19,9 +20,12 @@ export default Component.extend({
 
   status: conditional('task.complete', raw('complete'), raw('outstanding')),
 
-  clientAndClientAction: and('currentUser.user.isClient', 'task.currentActionBelongsToClient'),
+  /**
+   * Resolve required because currentActionBelongsToClient is async
+   */
+  clientAndClientAction: resolve(and('currentUser.user.isClient', 'task.currentActionBelongsToClient')),
 
-  homewardAndHomewardAction: and('currentUser.user.isSolicitor', ('task.currentActionBelongsToHomeward')),
+  homewardAndHomewardAction: resolve(and('currentUser.user.isSolicitor', 'task.currentActionBelongsToHomeward')),
 
   isOwner: or('homewardAndHomewardAction', 'clientAndClientAction'),
 

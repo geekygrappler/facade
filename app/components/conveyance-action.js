@@ -5,6 +5,7 @@ import { task } from 'ember-concurrency';
 
 export default Component.extend({
   store: service(),
+  'data-test-conveyance-action-component': true,
 
   fileQueueName: computed(function() {
     return `action-${this.action.id}-upload`;

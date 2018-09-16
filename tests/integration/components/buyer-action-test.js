@@ -22,7 +22,7 @@ module('Integration | Component | buyer-action', function(hooks) {
       `);
 
       assert.dom('[data-test-document-download]').exists({ count: 1 });
-      assert.dom('[data-test-buyer-action]').doesNotExist();
+      assert.dom('[data-test-document-upload-component]').doesNotExist();
     });
 
     module('as a buyer', function() {
@@ -36,7 +36,7 @@ module('Integration | Component | buyer-action', function(hooks) {
           }}
         `);
 
-        assert.dom('[data-test-buyer-action]').exists({ count: 1 });
+        assert.dom('[data-test-document-upload-component]').exists({ count: 1 });
         assert.dom('[data-test-document-download]').doesNotExist();
       });
     });
@@ -52,7 +52,7 @@ module('Integration | Component | buyer-action', function(hooks) {
           }}
         `);
 
-        assert.dom('[data-test-buyer-action-solicitor-message]').exists({ count: 1 });
+        assert.dom('[data-test-document-upload-component-solicitor-message]').exists({ count: 1 });
       });
     });
   });

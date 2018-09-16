@@ -187,6 +187,50 @@ module('Integration | Component | conveyance-task', function(hooks) {
 
       assert.dom('[data-test-completed-toggle]').doesNotExist();
     });
+
+    module('Task status - Document upload', function(hooks) {
+      hooks.beforeEach(function() {
+        this.set(
+          'documentUploadTask',
+          make(
+            'task',
+            {
+              actions: [make('task-action', { type: 'document-upload' })]
+            }
+          )
+        );
+      });
+
+      test('Task is shown as incomplete when no document exists', async function(assert) {
+        this.set('task', this.documentUploadTask);
+        await render(hbs`
+          {{conveyance-task
+            task=task
+          }}
+        `);
+
+        assert.dom('[data-test-conveyance-action-component]').exists();
+
+        assert.dom('[data-test-document-upload-component]').exists();
+
+        assert.dom('[data-test-status-incomplete]').exists();
+      });
+
+      test('Task is shown as awaiting approval when a document is uploaded', async function(assert) {
+        this.set('task', this.documentUploadTask);
+        await render(hbs`
+          {{conveyance-task
+            task=task
+          }}
+        `);
+
+        await click('[data-test-upload-from-file-system-button]');
+
+        await this.pauseTest();
+
+      });
+    });
+
     module('notes', function() {
       test('they can not be edited', async function(assert) {
         let task = make('task');
@@ -201,46 +245,6 @@ module('Integration | Component | conveyance-task', function(hooks) {
         assert.dom('[data-test-task-notes]').exists();
         assert.dom('[data-test-edit-notes-button]').doesNotExist();
       });
-    });
-  });
-
-  module('Task status - Document upload', function(hooks) {
-    hooks.beforeEach(function() {
-      this.owner.lookup('service:currentUser').set('user', make('user'));
-      this.set(
-        'documentUploadTask',
-        make(
-          'task',
-          {
-            clientActions: [make('task-action', { type: 'document-upload' })]
-          }
-        )
-      );
-    });
-
-    test('Task is shown as incomplete when no document exists', async function(assert) {
-      this.set('task', this.documentUploadTask);
-      await render(hbs`
-        {{conveyance-task
-          task=task
-        }}
-      `);
-
-      await this.pauseTest();
-      assert.dom('[data-test-status-incomplete]').exists();
-    });
-
-    test('Task is shown as awaiting approval when a document is uploaded exists', async function(assert) {
-      this.set('task', this.documentUploadTask);
-      await render(hbs`
-        {{conveyance-task
-          task=task
-        }}
-      `);
-
-      await this.pauseTest();
-
-      await click
     });
   });
 });

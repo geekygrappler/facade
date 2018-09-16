@@ -24,7 +24,12 @@
         multiple=true
         onfileadd=(perform onFileAdd)
       }}
-        <a class="p-4 bg-blue text-white block m-auto">Click to upload from file system</a>
+        <a
+          class="p-4 bg-blue text-white block m-auto"
+          data-test-upload-from-file-system-button
+        >
+          Click to upload from file system
+        </a>
       {{/file-upload}}
     </div>
   {{/if}}
