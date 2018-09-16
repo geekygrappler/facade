@@ -1,9 +1,14 @@
 import Component from '@ember/component';
+import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 
 export default Component.extend({
   store: service(),
+
+  fileQueueName: computed(function() {
+    return `action-${this.action.id}-upload`;
+  }),
 
   multipleDocumentUpload: task(function * (queue) {
     yield queue.files.reduce(file => this.uploadDocument(file));

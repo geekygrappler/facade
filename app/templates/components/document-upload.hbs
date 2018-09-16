@@ -3,7 +3,7 @@
   class="h-32 bg-grey-lighter flex items-center justify-center mb-4"
   data-test-document-upload=true
   ondrop=(perform onDrop)
-  name="documents" as |dropzone queue|
+  name=fileQueueName as |dropzone queue|
 }}
   {{#if dropzone.active}}
     {{#if dropzone.valid}}
@@ -18,7 +18,7 @@
       {{#if dropzone.supported}}
         <p class="mb-2">Drag and drop files onto this area to upload them.</p>
       {{/if}}
-      {{#file-upload name="documents"
+      {{#file-upload name=fileQueueName
         for="documents"
         accept="image/*"
         multiple=true

@@ -6,14 +6,11 @@
       {{task.title}}
     </h3>
     <p class="self-center" data-test-status>
-      complete - {{task.complete}}
-      awaiting- {{task.awaitingApproval}}
-
       {{#if task.complete}}
         Complete
       {{else if task.awaitingApproval}}
         <div
-          class="bg-yello rounded-full h-4 w-4"
+          class="bg-yellow rounded-full h-4 w-4"
           data-test-status-incomplete
         ></div>
       {{else}}

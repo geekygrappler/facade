@@ -1,9 +1,9 @@
 {{#if action.isDocumentUpload}}
   {{#if isOwner}}
     {{document-upload
-      action=action
       onFileAdd=uploadDocument
       onDrop=multipleDocumentUpload
+      fileQueueName=fileQueueName
       data-test-buyer-action=true
     }}
   {{else}}
