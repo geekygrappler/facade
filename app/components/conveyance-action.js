@@ -21,8 +21,7 @@ export default Component.extend({
     yield queue.files.reduce(file => this.uploadDocument(file));
   }),
 
-  uploadDocument: task(function * (file) {
-    let { action } = this;
+  uploadDocument: task(function * (action, file) {
     let document = this.store.createRecord('document', {
       name: file.name
     });

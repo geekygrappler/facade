@@ -17,12 +17,15 @@
     <div class="text-center">
       {{#if dropzone.supported}}
         <p class="mb-2">Drag and drop files onto this area to upload them.</p>
+        <p>File Queue Name: {{fileQueueName}}</p>
+        <p>OnFileAdd: {{onFileAdd.context.elementId}}</p>
+        <p>Action ID: {{action.id}}</p>
       {{/if}}
       {{#file-upload name=fileQueueName
         for="documents"
         accept="image/*"
         multiple=true
-        onfileadd=(perform onFileAdd)
+        onfileadd=(perform onFileAdd action)
       }}
         <a
           class="p-4 bg-blue text-white block m-auto"
